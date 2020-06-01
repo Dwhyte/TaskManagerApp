@@ -10,7 +10,7 @@
                     :style="{ display: errors ? 'block' : 'none' }"
                     class="invalid-feedback"
                 >
-                    <li v-if="errors.name">{{ errors.name }}</li>
+                    {{ errors.name[0] }}
                 </div>
                   <div class="form-group">
                     <label for="project_name">Project Name</label>
@@ -22,7 +22,7 @@
                   </div>
                 </form>
                 <ul v-else>
-                    <div v-if="projects.length === 0" style="padding: 17px">Create a new Project</div>
+                    <div v-if="!projects" style="padding: 17px">Create a new Project</div>
                     <li
                         v-else
                         v-for="project in projects"
@@ -47,7 +47,6 @@
         name: "ProjectListComponent",
         data() {
             return {
-                projects: [],
                 showForm: false,
                 errors: null,
                 form: {
@@ -58,60 +57,49 @@
             }
         },
         created() {
-            this.getProjects(); // load all projects
+             // load all projects on first creation
+            this.fetchProjects();
         },
         computed: {
         ...mapGetters({
+                projects: "GET_PROJECTS",
                 selectedProjectID: "GET_SELECTED_PROJECT_ID"
             })
         },
         methods: {
-            ...mapActions({
+         ...mapActions({
+              fetchProjects: "FETCH_PROJECTS",
               storeSelectedProjectID: "storeCurrentProjectID",
               storeTasks: "storeCurrentTasks",
-            }),
-            // fetch all projects
-            getProjects() {
-                axios.get('/vue/get-projects')
-                    .then(res => {
-                        console.log(res)
+         }),
 
-                        // assign all projects to projects array
-                        this.projects = res.data.data
-                    })
-                    .catch(error =>{
-                        console.log(error.response.data)
-                        this.errors = error.response.data
-                    })
+         // Create a new project
+          async createNewProject() {
+             try {
+                 let newProject = await axios.post('/vue/add-new-project', this.form);
+                 if(newProject.data.success) {
+                     console.log(newProject)
+
+                    // load new projects
+                    // this.getProjects()
+                    this.fetchProjects();
+
+                    // clear form fields
+                    this.form.name = ''
+                    this.form.description = ''
+                    this.form.is_completed = false
+
+                    // close form
+                    this.showForm = false
+                 }
+             } catch (error) {
+                 console.log('ERROR')
+                 console.log(error.response)
+                this.errors = error.response.data
+             }
             },
 
-            // Create a new project
-            createNewProject() {
-                axios.post('/vue/add-new-project', this.form)
-                    .then(res => {
-                        if(res.data.success) {
-                            console.log(res.data)
-
-                            // load new projects
-                            this.getProjects()
-
-                            // clear form fields
-                            this.form.name = ''
-                            this.form.description = ''
-                            this.form.is_completed = false
-
-                            // close form
-                            this.showForm = false
-                        }
-                    })
-                    .catch(error => {
-                        console.log(error.response.data)
-                        this.errors = error.response.data
-                    })
-
-            },
-
-            // Store selected tasks in vuex storage
+          // Store selected tasks in vuex storage
             getProjectTasks(projectID, tasks) {
                 this.storeSelectedProjectID(projectID)
                 this.storeTasks(tasks)
