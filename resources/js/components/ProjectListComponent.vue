@@ -17,8 +17,8 @@
             </ul>
         </div>
         <div class="d-block text-right card-footer">
-            <button class="btn btn-primary" @click="updateFormStatus(true)" v-if="!showForm">Add New Project</button>
-            <button class="mr-2 btn btn-secondary" v-if="showForm" @click="updateFormStatus(false)">Cancel</button>
+            <button class="btn btn-primary" @click="showNewProjectForm(true)" v-if="!showForm">Add New Project</button>
+            <button class="mr-2 btn btn-secondary" v-if="showForm" @click="showNewProjectForm(false)">Cancel</button>
         </div>
     </div>
 </template>
@@ -48,7 +48,7 @@
               fetchProjects: "FETCH_PROJECTS",
               storeSelectedProjectID: "storeCurrentProjectID",
               storeTasks: "storeCurrentTasks",
-              updateFormStatus: "updateAddNewProjectForm"
+              showNewProjectForm: "showNewProjectForm"
          }),
 
           // Store selected tasks in vuex storage

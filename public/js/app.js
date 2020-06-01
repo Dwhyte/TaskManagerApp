@@ -2007,7 +2007,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     fetchProjects: "FETCH_PROJECTS",
     storeSelectedProjectID: "storeCurrentProjectID",
     storeTasks: "storeCurrentTasks",
-    updateFormStatus: "updateAddNewProjectForm"
+    showNewProjectForm: "showNewProjectForm"
   })), {}, {
     // Store selected tasks in vuex storage
     getProjectTasks: function getProjectTasks(projectID, tasks) {
@@ -2101,6 +2101,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _TaskComponent__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TaskComponent */ "./resources/js/components/TaskComponent.vue");
+/* harmony import */ var _task_AddNewTask__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./task/AddNewTask */ "./resources/js/components/task/AddNewTask.vue");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -2140,89 +2141,31 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "TaskManagerComponent.vue",
   components: {
-    TaskComponent: _TaskComponent__WEBPACK_IMPORTED_MODULE_1__["default"]
+    TaskComponent: _TaskComponent__WEBPACK_IMPORTED_MODULE_1__["default"],
+    AddNewTask: _task_AddNewTask__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
-  data: function data() {
-    return {
-      errors: null,
-      showForm: false,
-      priority_levels: ['critical', 'important', 'normal', 'low'],
-      form: {
-        project_id: '',
-        task_name: '',
-        description: '',
-        priority_level: 'low',
-        is_completed: false
-      }
-    };
-  },
-  created: function created() {},
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])({
     selectedProjectID: "GET_SELECTED_PROJECT_ID",
-    tasks: "GET_SELECTED_PROJECT_TASKS"
+    tasks: "GET_SELECTED_PROJECT_TASKS",
+    showForm: "GET_TASK_FORM_STATUS"
   })),
-  methods: {
-    // Create a new task
-    addTask: function addTask() {
-      var _this = this;
-
-      axios.post('/vue/add-new-task', this.form).then(function (res) {
-        console.log(res); // push new results to tasks array
-
-        _this.tasks.push(res.data.data); // clear form fields
-
-
-        _this.form.task_name = '';
-        _this.form.description = '';
-        _this.form.priority_level = '';
-        _this.is_completed = false; // close form
-
-        _this.showForm = false;
-      })["catch"](function (error) {
-        console.log(error.response.data);
-        _this.errors = error.response.data;
-      });
-    },
+  methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])({
+    showTaskForm: "showTaskForm"
+  })), {}, {
     // Remove tasks from project
     removeTask: function removeTask(id, index) {
-      var _this2 = this;
+      var _this = this;
 
       axios.post("/vue/remove-task/".concat(id)).then(function (res) {
         console.log(res.data); // splice out selected task by index position from task list.
 
-        _this2.tasks.splice(index, 1);
+        _this.tasks.splice(index, 1);
       })["catch"](function (err) {
         return console.log(err);
       });
@@ -2230,7 +2173,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     changePriority: function changePriority(id, index) {
       axios.post("/vue/set-priority".concat(id));
     }
-  }
+  })
 });
 
 /***/ }),
@@ -2296,7 +2239,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     };
   },
   methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])({
-    fetchProjects: "FETCH_PROJECTS"
+    fetchProjects: "FETCH_PROJECTS",
+    showNewProjectForm: "showNewProjectForm"
   })), {}, {
     // Create a new project
     createNewProject: function createNewProject() {
@@ -2326,7 +2270,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                   _this.form.description = '';
                   _this.form.is_completed = false; // close form
 
-                  _this.showForm = false;
+                  _this.showNewProjectForm(false);
+
                   _this.errors = null;
                 }
 
@@ -2347,6 +2292,104 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           }
         }, _callee, null, [[0, 7]]);
       }))();
+    }
+  })
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/task/AddNewTask.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/task/AddNewTask.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "AddNewTask",
+  data: function data() {
+    return {
+      errors: null,
+      priority_levels: ['critical', 'important', 'normal', 'low'],
+      form: {
+        project_id: '',
+        task_name: '',
+        description: '',
+        priority_level: 'low',
+        is_completed: false
+      }
+    };
+  },
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])({
+    selectedProjectID: "GET_SELECTED_PROJECT_ID",
+    tasks: "GET_SELECTED_PROJECT_TASKS"
+  })),
+  methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])({
+    showForm: "showTaskForm"
+  })), {}, {
+    // Create a new task
+    addTask: function addTask() {
+      var _this = this;
+
+      axios.post('/vue/add-new-task', this.form).then(function (res) {
+        console.log(res); // push new results to tasks array
+        // this.tasks.push(res.data.data)
+        // reload new tasks list.
+
+        _this.tasks(); // clear form fields
+
+
+        _this.form.task_name = '';
+        _this.form.description = '';
+        _this.form.priority_level = '';
+        _this.is_completed = false; // close form
+
+        _this.showForm(false);
+      })["catch"](function (error) {
+        console.log(error.response.data);
+        _this.errors = error.response.data;
+      });
     }
   })
 });
@@ -40746,7 +40789,7 @@ var render = function() {
               staticClass: "btn btn-primary",
               on: {
                 click: function($event) {
-                  return _vm.updateFormStatus(true)
+                  return _vm.showNewProjectForm(true)
                 }
               }
             },
@@ -40761,7 +40804,7 @@ var render = function() {
               staticClass: "mr-2 btn btn-secondary",
               on: {
                 click: function($event) {
-                  return _vm.updateFormStatus(false)
+                  return _vm.showNewProjectForm(false)
                 }
               }
             },
@@ -40933,193 +40976,21 @@ var render = function() {
               },
               [
                 _c("div", { staticClass: "ps-content" }, [
-                  _vm.showForm
-                    ? _c("ul", [
-                        _c("form", { staticClass: "mt-3 form-group" }, [
-                          _vm.errors
-                            ? _c(
-                                "div",
-                                {
-                                  staticClass: "invalid-feedback",
-                                  style: {
-                                    display: _vm.errors ? "block" : "none"
-                                  }
-                                },
-                                [
-                                  _vm.errors.task_name
-                                    ? _c("li", [
-                                        _vm._v(_vm._s(_vm.errors.task_name))
-                                      ])
-                                    : _vm._e(),
-                                  _vm._v(" "),
-                                  _vm.errors.description
-                                    ? _c("li", [
-                                        _vm._v(_vm._s(_vm.errors.description))
-                                      ])
-                                    : _vm._e()
-                                ]
-                              )
-                            : _vm._e(),
-                          _vm._v(" "),
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: (_vm.form.project_id =
-                                  _vm.selectedProjectID),
-                                expression:
-                                  "form.project_id = selectedProjectID"
-                              }
-                            ],
-                            attrs: { type: "text", hidden: "" },
-                            domProps: {
-                              value: (_vm.form.project_id =
-                                _vm.selectedProjectID)
-                            },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.$set(
-                                  _vm.form,
-                                  "project_id = selectedProjectID",
-                                  $event.target.value
-                                )
-                              }
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c("div", [
-                            _c("label", { attrs: { for: "task_name" } }, [
-                              _vm._v("Task name")
-                            ]),
-                            _vm._v(" "),
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.form.task_name,
-                                  expression: "form.task_name"
-                                }
-                              ],
-                              staticClass: "form-control mb-2 mr-sm-2",
-                              attrs: {
-                                type: "text",
-                                id: "task_name",
-                                placeholder: "please add task name"
-                              },
-                              domProps: { value: _vm.form.task_name },
-                              on: {
-                                input: function($event) {
-                                  if ($event.target.composing) {
-                                    return
-                                  }
-                                  _vm.$set(
-                                    _vm.form,
-                                    "task_name",
-                                    $event.target.value
-                                  )
-                                }
-                              }
+                  _c(
+                    "ul",
+                    { staticClass: " list-group list-group-flush" },
+                    [
+                      _vm.showForm
+                        ? _c("AddNewTask")
+                        : _vm._l(_vm.tasks, function(task) {
+                            return _c("task-component", {
+                              key: task.id,
+                              attrs: { task: task }
                             })
-                          ]),
-                          _vm._v(" "),
-                          _c("div", [
-                            _c("label", { attrs: { for: "description" } }, [
-                              _vm._v("Description")
-                            ]),
-                            _vm._v(" "),
-                            _c("textarea", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.form.description,
-                                  expression: "form.description"
-                                }
-                              ],
-                              staticClass: "form-control mb-2 mr-sm-2",
-                              attrs: {
-                                id: "description",
-                                placeholder: "please add description"
-                              },
-                              domProps: { value: _vm.form.description },
-                              on: {
-                                input: function($event) {
-                                  if ($event.target.composing) {
-                                    return
-                                  }
-                                  _vm.$set(
-                                    _vm.form,
-                                    "description",
-                                    $event.target.value
-                                  )
-                                }
-                              }
-                            })
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "form-group" }, [
-                            _c("label", { attrs: { for: "priority" } }, [
-                              _vm._v("Example select")
-                            ]),
-                            _vm._v(" "),
-                            _c(
-                              "select",
-                              {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.form.priority_level,
-                                    expression: "form.priority_level"
-                                  }
-                                ],
-                                staticClass: "form-control",
-                                attrs: { id: "priority" },
-                                on: {
-                                  change: function($event) {
-                                    var $$selectedVal = Array.prototype.filter
-                                      .call($event.target.options, function(o) {
-                                        return o.selected
-                                      })
-                                      .map(function(o) {
-                                        var val =
-                                          "_value" in o ? o._value : o.value
-                                        return val
-                                      })
-                                    _vm.$set(
-                                      _vm.form,
-                                      "priority_level",
-                                      $event.target.multiple
-                                        ? $$selectedVal
-                                        : $$selectedVal[0]
-                                    )
-                                  }
-                                }
-                              },
-                              _vm._l(_vm.priority_levels, function(priority) {
-                                return _c("option", [_vm._v(_vm._s(priority))])
-                              }),
-                              0
-                            )
-                          ])
-                        ])
-                      ])
-                    : _c(
-                        "ul",
-                        { staticClass: " list-group list-group-flush" },
-                        _vm._l(_vm.tasks, function(task) {
-                          return _c("task-component", {
-                            key: task.id,
-                            attrs: { task: task }
                           })
-                        }),
-                        1
-                      )
+                    ],
+                    2
+                  )
                 ])
               ]
             )
@@ -41133,7 +41004,7 @@ var render = function() {
                     staticClass: "mr-2 btn btn-secondary",
                     on: {
                       click: function($event) {
-                        _vm.showForm = false
+                        return _vm.showTaskForm(false)
                       }
                     }
                   },
@@ -41148,22 +41019,11 @@ var render = function() {
                     staticClass: "btn btn-primary",
                     on: {
                       click: function($event) {
-                        _vm.showForm = !_vm.showForm
+                        return _vm.showTaskForm(true)
                       }
                     }
                   },
                   [_vm._v("Create New Task")]
-                )
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.showForm
-              ? _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-success",
-                    on: { click: _vm.addTask }
-                  },
-                  [_vm._v("Add Task")]
                 )
               : _vm._e()
           ])
@@ -41303,6 +41163,198 @@ var staticRenderFns = [
           staticStyle: { width: "100%" },
           attrs: { type: "submit" }
         },
+        [_vm._v("Save")]
+      )
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/task/AddNewTask.vue?vue&type=template&id=308d8bd3&scoped=true&":
+/*!******************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/task/AddNewTask.vue?vue&type=template&id=308d8bd3&scoped=true& ***!
+  \******************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "form",
+    {
+      staticClass: "mt-3 form-group",
+      on: {
+        submit: function($event) {
+          $event.preventDefault()
+          return _vm.addTask($event)
+        }
+      }
+    },
+    [
+      _vm.errors
+        ? _c(
+            "div",
+            {
+              staticClass: "invalid-feedback",
+              style: { display: _vm.errors ? "block" : "none" }
+            },
+            [
+              _vm.errors.task_name
+                ? _c("li", [_vm._v(_vm._s(_vm.errors.task_name))])
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.errors.description
+                ? _c("li", [_vm._v(_vm._s(_vm.errors.description))])
+                : _vm._e()
+            ]
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: (_vm.form.project_id = _vm.selectedProjectID),
+            expression: "form.project_id = selectedProjectID"
+          }
+        ],
+        attrs: { type: "text", hidden: "" },
+        domProps: { value: (_vm.form.project_id = _vm.selectedProjectID) },
+        on: {
+          input: function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.$set(
+              _vm.form,
+              "project_id = selectedProjectID",
+              $event.target.value
+            )
+          }
+        }
+      }),
+      _vm._v(" "),
+      _c("div", [
+        _c("label", { attrs: { for: "task_name" } }, [_vm._v("Task name")]),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.form.task_name,
+              expression: "form.task_name"
+            }
+          ],
+          staticClass: "form-control mb-2 mr-sm-2",
+          attrs: {
+            type: "text",
+            id: "task_name",
+            placeholder: "please add task name"
+          },
+          domProps: { value: _vm.form.task_name },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.form, "task_name", $event.target.value)
+            }
+          }
+        })
+      ]),
+      _vm._v(" "),
+      _c("div", [
+        _c("label", { attrs: { for: "description" } }, [_vm._v("Description")]),
+        _vm._v(" "),
+        _c("textarea", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.form.description,
+              expression: "form.description"
+            }
+          ],
+          staticClass: "form-control mb-2 mr-sm-2",
+          attrs: { id: "description", placeholder: "please add description" },
+          domProps: { value: _vm.form.description },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.form, "description", $event.target.value)
+            }
+          }
+        })
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "form-group" }, [
+        _c("label", { attrs: { for: "priority" } }, [_vm._v("Priority")]),
+        _vm._v(" "),
+        _c(
+          "select",
+          {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.form.priority_level,
+                expression: "form.priority_level"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: { id: "priority" },
+            on: {
+              change: function($event) {
+                var $$selectedVal = Array.prototype.filter
+                  .call($event.target.options, function(o) {
+                    return o.selected
+                  })
+                  .map(function(o) {
+                    var val = "_value" in o ? o._value : o.value
+                    return val
+                  })
+                _vm.$set(
+                  _vm.form,
+                  "priority_level",
+                  $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+                )
+              }
+            }
+          },
+          _vm._l(_vm.priority_levels, function(priority) {
+            return _c("option", [_vm._v(_vm._s(priority))])
+          }),
+          0
+        )
+      ]),
+      _vm._v(" "),
+      _vm._m(0)
+    ]
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group" }, [
+      _c(
+        "button",
+        { staticClass: "mr-2 btn btn-success", attrs: { type: "submit" } },
         [_vm._v("Save")]
       )
     ])
@@ -55075,6 +55127,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/task/AddNewTask.vue":
+/*!*****************************************************!*\
+  !*** ./resources/js/components/task/AddNewTask.vue ***!
+  \*****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _AddNewTask_vue_vue_type_template_id_308d8bd3_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AddNewTask.vue?vue&type=template&id=308d8bd3&scoped=true& */ "./resources/js/components/task/AddNewTask.vue?vue&type=template&id=308d8bd3&scoped=true&");
+/* harmony import */ var _AddNewTask_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AddNewTask.vue?vue&type=script&lang=js& */ "./resources/js/components/task/AddNewTask.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _AddNewTask_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _AddNewTask_vue_vue_type_template_id_308d8bd3_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _AddNewTask_vue_vue_type_template_id_308d8bd3_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "308d8bd3",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/task/AddNewTask.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/task/AddNewTask.vue?vue&type=script&lang=js&":
+/*!******************************************************************************!*\
+  !*** ./resources/js/components/task/AddNewTask.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AddNewTask_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./AddNewTask.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/task/AddNewTask.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AddNewTask_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/task/AddNewTask.vue?vue&type=template&id=308d8bd3&scoped=true&":
+/*!************************************************************************************************!*\
+  !*** ./resources/js/components/task/AddNewTask.vue?vue&type=template&id=308d8bd3&scoped=true& ***!
+  \************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AddNewTask_vue_vue_type_template_id_308d8bd3_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./AddNewTask.vue?vue&type=template&id=308d8bd3&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/task/AddNewTask.vue?vue&type=template&id=308d8bd3&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AddNewTask_vue_vue_type_template_id_308d8bd3_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AddNewTask_vue_vue_type_template_id_308d8bd3_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/store.js":
 /*!*******************************!*\
   !*** ./resources/js/store.js ***!
@@ -55103,7 +55224,8 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
     selectedProjectID: null,
     selectedProjectTasks: null,
     projects: null,
-    showAddNewProjectForm: false
+    showAddNewProjectForm: false,
+    showTaskForm: false
   },
   getters: {
     GET_SELECTED_PROJECT_ID: function GET_SELECTED_PROJECT_ID(state) {
@@ -55117,6 +55239,9 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
     },
     GET_ADD_NEW_PROJECT_FORM: function GET_ADD_NEW_PROJECT_FORM(state) {
       return state.showAddNewProjectForm;
+    },
+    GET_TASK_FORM_STATUS: function GET_TASK_FORM_STATUS(state) {
+      return state.showTaskForm;
     }
   },
   mutations: {
@@ -55129,8 +55254,11 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
     SET_PROJECTS: function SET_PROJECTS(state, data) {
       state.projects = data;
     },
-    SET_ADD_NEW_PROJECT_FORM: function SET_ADD_NEW_PROJECT_FORM(state, value) {
-      state.showAddNewProjectForm = value;
+    SET_ADD_NEW_PROJECT_FORM: function SET_ADD_NEW_PROJECT_FORM(state, status) {
+      state.showAddNewProjectForm = status;
+    },
+    SET_TASK_FORM_STATUS: function SET_TASK_FORM_STATUS(state, status) {
+      state.showTaskForm = status;
     }
   },
   actions: {
@@ -55171,16 +55299,22 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
         }, _callee, null, [[1, 8]]);
       }))();
     },
-    updateAddNewProjectForm: function updateAddNewProjectForm(_ref2, value) {
+    // update project form status = true/false
+    showNewProjectForm: function showNewProjectForm(_ref2, value) {
       var commit = _ref2.commit;
       commit("SET_ADD_NEW_PROJECT_FORM", value);
     },
-    storeCurrentTasks: function storeCurrentTasks(_ref3, tasks) {
+    // update task form status = true/false
+    showTaskForm: function showTaskForm(_ref3, status) {
       var commit = _ref3.commit;
+      commit("SET_TASK_FORM_STATUS", status);
+    },
+    storeCurrentTasks: function storeCurrentTasks(_ref4, tasks) {
+      var commit = _ref4.commit;
       commit("SET_PROJECT_TASKS", tasks);
     },
-    storeCurrentProjectID: function storeCurrentProjectID(_ref4, projectID) {
-      var commit = _ref4.commit;
+    storeCurrentProjectID: function storeCurrentProjectID(_ref5, projectID) {
+      var commit = _ref5.commit;
       commit("SET_PROJECT_ID", projectID);
     }
   }

@@ -37,7 +37,8 @@
         },
         methods: {
          ...mapActions({
-              fetchProjects: "FETCH_PROJECTS",
+             fetchProjects: "FETCH_PROJECTS",
+             showNewProjectForm: "showNewProjectForm"
          }),
             // Create a new project
               async createNewProject() {
@@ -56,7 +57,7 @@
                         this.form.is_completed = false
 
                         // close form
-                        this.showForm = false
+                        this.showNewProjectForm(false)
                         this.errors = null
                      }
                  } catch (error) {
