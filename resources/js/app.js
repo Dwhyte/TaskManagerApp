@@ -12,6 +12,9 @@ import VueAxios from 'vue-axios'
 import Vuex from 'vuex';
 import StoreData from './store';
 import VueDraggable from 'vue-draggable';
+import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
+
 
 /**
  * The following block of code may be used to automatically register your
@@ -37,6 +40,9 @@ Vue.component('task-manager-component', require('./components/TaskManagerCompone
 
 Vue.use(VueAxios, axios);
 Vue.use(VueDraggable);
+Vue.use(BootstrapVue)
+Vue.use(IconsPlugin)
+
 const store = new Vuex.Store(StoreData);
 
 const app = new Vue({

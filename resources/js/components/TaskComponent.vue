@@ -28,6 +28,7 @@
                     <button class="border-0 btn-transition btn btn-outline-success" data-toggle="modal" data-target="#editTaskModal" @click="selectedTask(task)">
                         <i class="fa fa-pencil" title="change priority"></i>
                     </button>
+                    <b-button id="show-btn" @click="showModal(task)">Open Modal</b-button>
                     <button class="border-0 btn-transition btn btn-outline-danger"
                             @click="removeTask(task.id, index)">
                         <i class="fa fa-trash"></i>
@@ -57,10 +58,12 @@
                         this.fetchProjects()
                     })
                     .catch(err => console.log(err))
-            }
-        }
-
-
+            },
+            showModal(task) {
+              this.$root.$emit('bv::show::modal', 'modal-1', '#btnShow', this.task)
+              this.selectedTask(task)
+            },
+        },
     }
 </script>
 

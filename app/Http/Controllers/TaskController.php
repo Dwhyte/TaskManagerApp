@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Project;
 use App\Models\Task;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -9,6 +10,26 @@ use Illuminate\Support\Facades\Validator;
 
 class TaskController extends Controller
 {
+
+    /**
+     * Get all tasks by project ID
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getAllTasks(Project $project)
+    {
+        $tasks = Task::where('project_id', '=' , $project->id)
+            ->orderByRaw("tasks.priority_level = 'critical' DESC")
+            ->orderByRaw("tasks.priority_level = 'important' DESC")
+            ->orderByRaw("tasks.priority_level = 'normal' DESC")
+            ->orderByRaw("tasks.priority_level = 'low' DESC")
+            ->get();
+
+        // return results in JSON format
+        return response()->json(['success' => true, 'data' => $tasks], 200);
+    }
+
+
     /**
      * Create a new task
      * @param Request $request
@@ -41,13 +62,32 @@ class TaskController extends Controller
     }
 
 
-
-    public function setPriority(Task $task, Request $request)
+    /**
+     * Update Task
+     * @param Task $task
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function updateTask(Task $task, Request $request)
     {
+
+        $validator = Validator::make($request->all(), [
+            'task_name' => 'required',
+            'description' => 'required'
+        ]);
+
+        // check if validator fails and return errors
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+
+        $task->task_name = $request->task_name;
+        $task->description = $request->description;
         $task->priority_level = $request->priority_level;
+        $task->is_completed = $request->is_completed;
         $task->update();
 
-        return response()->json(['success' => true, 'message' => 'Task Priority updated!'], 200);
+        return response()->json(['success' => true, 'data' => $task, 'message' => 'Task updated!'], 200);
     }
 
 

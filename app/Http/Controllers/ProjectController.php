@@ -10,20 +10,25 @@ use Illuminate\Support\Facades\Validator;
 class ProjectController extends Controller
 {
     /**
-     * Fetch all projects with tasks that are assigned to it.
+     * Fetch all projects for auth user
      * @return \Illuminate\Http\JsonResponse
      */
     public function getAllProjects()
     {
         $user = Auth::user();
-        $projects = Project::with(['Tasks' => function ($query) {
-            $query->orderByRaw("tasks.priority_level = 'critical' DESC");
-            $query->orderByRaw("tasks.priority_level = 'important' DESC");
-            $query->orderByRaw("tasks.priority_level = 'normal' DESC");
-            $query->orderByRaw("tasks.priority_level = 'low' DESC");
+//        $projects = Project::with(['Tasks' => function ($query) {
+//            $query->orderByRaw("tasks.priority_level = 'critical' DESC");
+//            $query->orderByRaw("tasks.priority_level = 'important' DESC");
+//            $query->orderByRaw("tasks.priority_level = 'normal' DESC");
+//            $query->orderByRaw("tasks.priority_level = 'low' DESC");
+//
+//        }])
+//            ->where('user_id', '=', $user->id)
+//            ->select('id', 'user_id', 'name')
+//            ->latest()
+//            ->get();
 
-        }])
-            ->where('user_id', '=', $user->id)
+        $projects = Project::where('user_id', '=', $user->id)
             ->select('id', 'user_id', 'name')
             ->latest()
             ->get();

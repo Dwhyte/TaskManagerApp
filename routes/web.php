@@ -36,8 +36,9 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/add-new-project', 'ProjectController@newProject');
         Route::post('/remove-project{project}', 'ProjectController@removeProject');
 
+        Route::post('/project/tasks/{project}', 'TaskController@getAllTasks');
         Route::post('/add-new-task', 'TaskController@store');
-        Route::post('/set-priority/{task}', 'TaskController@setPriority');
+        Route::post('/update/{task}', 'TaskController@updateTask');
         Route::post('/remove-task/{task}', 'TaskController@removeTask');
     });
 

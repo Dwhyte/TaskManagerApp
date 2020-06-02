@@ -8,6 +8,7 @@ export default {
         selectedProjectID: null,
         selectedProjectTasks: null,
         task: null,
+        tasks: null,
         projects: null,
         showAddNewProjectForm: false,
         showTaskForm: false,
@@ -22,6 +23,9 @@ export default {
         },
         GET_PROJECTS(state) {
             return state.projects
+        },
+        GET_ALL_TASKS(state) {
+          return state.tasks
         },
         GET_TASK(state) {
             return state.task
@@ -43,6 +47,9 @@ export default {
         },
         SET_PROJECTS(state, data) {
             state.projects = data
+        },
+        SET_ALL_TASKS(state, data) {
+            state.tasks = data
         },
         SET_TASK(state, task) {
           state.task = task
@@ -67,6 +74,33 @@ export default {
             } catch (error) {
                 console.log(error.response.data)
             }
+        },
+
+
+        // Fetch all project tasks by project ID
+        async FETCH_PROJECT_TASKS({commit}, projectID) {
+           try {
+               let tasks = await axios.post(`/vue/project/tasks/${projectID}`)
+               if(tasks.data){
+                   // update tasks state
+                   commit('SET_ALL_TASKS', tasks.data.data)
+               }
+           }  catch (error) {
+               console.log(error.response.data)
+           }
+        },
+
+
+        async UPDATE_TASK({commit, dispatch}, taskData) {
+           try {
+                let res = await axios.post(`/vue/update/${taskData.taskID}`, taskData)
+                if(res.data.success) {
+                    dispatch('FETCH_PROJECTS')
+                    console.log('update worked from here')
+                }
+           } catch(error) {
+               console.log(error.response.data)
+           }
         },
 
         // update project form status = true/false

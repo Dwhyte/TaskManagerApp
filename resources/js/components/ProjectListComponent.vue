@@ -10,7 +10,7 @@
                 <li
                     v-else
                     v-for="project in projects"
-                    @click="getProjectTasks(project.id,project.tasks)"
+                    @click="getProjectTasks(project.id)"
                     :class="{'selected': selectedProjectID === project.id}">
                     {{ project.name }}
                 </li>
@@ -28,36 +28,39 @@
     import { mapActions, mapGetters } from "vuex";
     import AddNewProject from "./projects/AddNewProject";
     export default {
+        props: ['projects'],
         name: "ProjectListComponent",
         components: {
             AddNewProject
         },
-        created() {
-             // load all projects on first creation
-            this.fetchProjects();
-        },
+        // created() {
+        //      // load all projects on first creation
+        //     this.fetchProjects();
+        // },
         computed: {
         ...mapGetters({
-                projects: "GET_PROJECTS",
+                // projects: "GET_PROJECTS",
                 selectedProjectID: "GET_SELECTED_PROJECT_ID",
                 showForm: "GET_ADD_NEW_PROJECT_FORM"
             })
         },
         methods: {
          ...mapActions({
-              fetchProjects: "FETCH_PROJECTS",
+              // fetchProjects: "FETCH_PROJECTS",
+              fetchTasks: 'FETCH_PROJECT_TASKS',
               storeSelectedProjectID: "storeCurrentProjectID",
               storeTasks: "storeCurrentTasks",
               showNewProjectForm: "showNewProjectForm"
          }),
 
           // Store selected tasks in vuex storage
-            getProjectTasks(projectID, tasks) {
+            getProjectTasks(projectID) {
                 this.storeSelectedProjectID(projectID)
-                this.storeTasks(tasks)
+                this.fetchTasks(projectID)
+                // this.storeTasks(tasks)
                 // console.log(tasks)
             }
-        }
+        },
     }
 </script>
 

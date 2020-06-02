@@ -3,7 +3,7 @@
     <EditTaskModalComponent></EditTaskModalComponent>
     <div class="row">
         <div class="col-md-3">
-            <project-list-component></project-list-component>
+            <project-list-component :projects="projects"></project-list-component>
         </div>
         <div class="col-md-9">
                 <div class="card-hover-shadow-2x mb-3 card">
@@ -44,15 +44,21 @@
             AddNewTask,
             EditTaskModalComponent
         },
+        created() {
+             // load all projects on first creation
+            this.fetchProjects();
+        },
         computed: {
         ...mapGetters({
+                projects: 'GET_PROJECTS',
                 selectedProjectID: "GET_SELECTED_PROJECT_ID",
-                tasks: "GET_SELECTED_PROJECT_TASKS",
+                tasks: "GET_ALL_TASKS",
                 showForm: "GET_TASK_FORM_STATUS"
             })
         },
         methods: {
           ...mapActions({
+              fetchProjects: "FETCH_PROJECTS",
               showTaskForm: "showTaskForm"
           }),
             // Remove tasks from project
@@ -70,6 +76,9 @@
             changePriority(id, index) {
                 axios.post(`/vue/set-priority${id}`, )
             }
+        },
+        watch: {
+
         }
     }
 </script>
