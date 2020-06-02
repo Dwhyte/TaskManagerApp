@@ -63,10 +63,11 @@
               showForm: "showTaskForm"
          }),
            // Create a new task
-            addTask() {
-                axios.post('/vue/add-new-task', this.form)
-                    .then(res => {
-                        console.log(res)
+           async addTask() {
+                try {
+                   let newTask = await axios.post('/vue/add-new-task', this.form)
+                   if (newTask.data.success) {
+                        console.log(newTask.data)
 
                         // push new results to tasks array
                         // this.tasks.push(res.data.data)
@@ -81,11 +82,12 @@
 
                         // close form
                         this.showForm(false)
-                    })
-                    .catch(error => {
-                       console.log(error.response.data)
-                        this.errors = error.response.data
-                    })
+                       this.errors = null
+                   }
+                } catch (error) {
+                   console.log(error.response)
+                    this.errors = error.response.data
+                }
             },
         }
     }

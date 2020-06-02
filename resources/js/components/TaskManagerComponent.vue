@@ -1,5 +1,6 @@
 <template>
 <div class="container">
+    <EditTaskModalComponent></EditTaskModalComponent>
     <div class="row">
         <div class="col-md-3">
             <project-list-component></project-list-component>
@@ -35,11 +36,13 @@
     import { mapActions, mapGetters } from "vuex";
     import TaskComponent from "./TaskComponent";
     import AddNewTask from "./task/AddNewTask";
+    import EditTaskModalComponent from "./modals/EditTaskModalComponent";
     export default {
         name: "TaskManagerComponent.vue",
         components: {
             TaskComponent,
-            AddNewTask
+            AddNewTask,
+            EditTaskModalComponent
         },
         computed: {
         ...mapGetters({

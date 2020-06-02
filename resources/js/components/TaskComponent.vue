@@ -25,8 +25,9 @@
                     </div>
                 </div>
                 <div class="widget-content-right">
-                    <button class="border-0 btn-transition btn btn-outline-success">
-                        <i class="fa fa-pencil" title="change priority"></i></button>
+                    <button class="border-0 btn-transition btn btn-outline-success" data-toggle="modal" data-target="#editTaskModal" @click="selectedTask(task)">
+                        <i class="fa fa-pencil" title="change priority"></i>
+                    </button>
                     <button class="border-0 btn-transition btn btn-outline-danger"
                             @click="removeTask(task.id, index)">
                         <i class="fa fa-trash"></i>
@@ -38,21 +39,22 @@
 </template>
 
 <script>
+    import { mapActions, mapGetters } from "vuex";
     export default {
         props: ['task'],
         name: "TaskComponent",
-        data() {
-            return {
-
-            }
-        },
-
         methods: {
+          ...mapActions({
+              selectedTask: "selectedTask",
+              fetchProjects: "FETCH_PROJECTS"
+
+          }),
             removeTask(id) {
                 axios.post(`/vue/remove-task/${id}`)
                     .then(res => {
                         console.log(res.data)
-                        this.task.splice(id, 1);
+                        // this.task.splice(id, 1);
+                        this.fetchProjects()
                     })
                     .catch(err => console.log(err))
             }

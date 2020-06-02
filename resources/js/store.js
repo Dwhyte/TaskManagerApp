@@ -7,6 +7,7 @@ export default {
     state: {
         selectedProjectID: null,
         selectedProjectTasks: null,
+        task: null,
         projects: null,
         showAddNewProjectForm: false,
         showTaskForm: false,
@@ -21,6 +22,9 @@ export default {
         },
         GET_PROJECTS(state) {
             return state.projects
+        },
+        GET_TASK(state) {
+            return state.task
         },
         GET_ADD_NEW_PROJECT_FORM(state) {
             return state.showAddNewProjectForm
@@ -39,6 +43,9 @@ export default {
         },
         SET_PROJECTS(state, data) {
             state.projects = data
+        },
+        SET_TASK(state, task) {
+          state.task = task
         },
         SET_ADD_NEW_PROJECT_FORM(state, status) {
             state.showAddNewProjectForm = status
@@ -72,6 +79,9 @@ export default {
            commit("SET_TASK_FORM_STATUS", status)
         },
 
+        selectedTask({commit}, task) {
+            commit("SET_TASK", task)
+        },
 
         storeCurrentTasks({ commit }, tasks) {
             commit("SET_PROJECT_TASKS", tasks)
