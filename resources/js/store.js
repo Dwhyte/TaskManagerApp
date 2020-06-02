@@ -6,9 +6,10 @@ Vue.use(Vuex);
 export default {
     state: {
         selectedProjectID: null,
+        selectedProjectName: null,
         selectedProjectTasks: null,
         task: null,
-        tasks: null,
+        tasks: [],
         projects: null,
         showAddNewProjectForm: false,
         showTaskForm: false,
@@ -17,6 +18,9 @@ export default {
     getters: {
         GET_SELECTED_PROJECT_ID(state) {
             return state.selectedProjectID
+        },
+        GET_SELECTED_PROJECT_NAME(state) {
+            return state.selectedProjectName
         },
         GET_SELECTED_PROJECT_TASKS(state) {
             return state.selectedProjectTasks
@@ -39,8 +43,11 @@ export default {
     },
 
     mutations: {
-        SET_PROJECT_ID(state, value) {
-            state.selectedProjectID = value;
+        SET_PROJECT_ID(state, id) {
+            state.selectedProjectID = id;
+        },
+        SET_PROJECT_NAME(state, name) {
+            state.selectedProjectName = name
         },
         SET_PROJECT_TASKS(state, tasks) {
             state.selectedProjectTasks = tasks;
@@ -123,6 +130,10 @@ export default {
 
         storeCurrentProjectID({ commit }, projectID) {
             commit("SET_PROJECT_ID", projectID)
+        },
+
+        storeCurrentProjectName({commit}, projectName) {
+           commit("SET_PROJECT_NAME", projectName)
         }
 
     }

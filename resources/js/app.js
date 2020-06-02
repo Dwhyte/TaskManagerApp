@@ -14,6 +14,8 @@ import StoreData from './store';
 import VueDraggable from 'vue-draggable';
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+import VueFlashMessage from 'vue-flash-message';
+require("vue-flash-message/dist/vue-flash-message.min.css");
 
 
 /**
@@ -40,8 +42,17 @@ Vue.component('task-manager-component', require('./components/TaskManagerCompone
 
 Vue.use(VueAxios, axios);
 Vue.use(VueDraggable);
-Vue.use(BootstrapVue)
-Vue.use(IconsPlugin)
+Vue.use(BootstrapVue);
+Vue.use(IconsPlugin);
+Vue.use(VueFlashMessage);
+// Vue.use(VueFlashMessage, {
+//   messageOptions: {
+//     timeout: 1000,
+//     important: true,
+//     autoEmit: false,
+//     pauseOnInteract: true
+//   }
+// });
 
 const store = new Vuex.Store(StoreData);
 

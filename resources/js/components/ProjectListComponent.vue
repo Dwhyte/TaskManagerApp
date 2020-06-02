@@ -4,13 +4,13 @@
             <div class="card-header-title font-size-lg text-capitalize font-weight-normal"><i class="fa fa-tasks"></i>&nbsp;My Projects</div>
         </div>
         <div class="scroll-area-sm">
-            <AddNewProject v-if="showForm"></AddNewProject>
+            <AddNewProjectComponent v-if="showForm"></AddNewProjectComponent>
             <ul v-else>
                 <div v-if="!projects" style="padding: 17px">Create a new Project</div>
                 <li
                     v-else
                     v-for="project in projects"
-                    @click="getProjectTasks(project.id)"
+                    @click="getProjectTasks(project.id, project.name)"
                     :class="{'selected': selectedProjectID === project.id}">
                     {{ project.name }}
                 </li>
@@ -26,12 +26,12 @@
 
 <script>
     import { mapActions, mapGetters } from "vuex";
-    import AddNewProject from "./projects/AddNewProject";
+    import AddNewProjectComponent from "./projects/AddNewProjectComponent";
     export default {
         props: ['projects'],
         name: "ProjectListComponent",
         components: {
-            AddNewProject
+            AddNewProjectComponent
         },
         // created() {
         //      // load all projects on first creation
@@ -41,6 +41,7 @@
         ...mapGetters({
                 // projects: "GET_PROJECTS",
                 selectedProjectID: "GET_SELECTED_PROJECT_ID",
+                selectedProjectName: "GET_SELECTED_PROJECT_NAME",
                 showForm: "GET_ADD_NEW_PROJECT_FORM"
             })
         },
@@ -49,13 +50,16 @@
               // fetchProjects: "FETCH_PROJECTS",
               fetchTasks: 'FETCH_PROJECT_TASKS',
               storeSelectedProjectID: "storeCurrentProjectID",
+              storeSelectedProjectName: "storeCurrentProjectName",
               storeTasks: "storeCurrentTasks",
               showNewProjectForm: "showNewProjectForm"
          }),
 
           // Store selected tasks in vuex storage
-            getProjectTasks(projectID) {
+            getProjectTasks(projectID, projectName) {
+             console.log(projectName)
                 this.storeSelectedProjectID(projectID)
+                this.storeSelectedProjectName(projectName)
                 this.fetchTasks(projectID)
                 // this.storeTasks(tasks)
                 // console.log(tasks)
@@ -78,7 +82,8 @@
     }
 
     ul li:hover {
-        background: #e6e9ec9e;
+        background: #bfc5ce;
+        color: #fff;
     }
 
     form {
@@ -86,10 +91,12 @@
     }
 
     .selected {
-        background: #c7def5;
+        background: #7b838c;
+        border: 2px solid #435261;
+        color: #fff;
     }
 
     ul li.selected:hover {
-        background: #c7def5;
+        background: #7b838c;
     }
 </style>

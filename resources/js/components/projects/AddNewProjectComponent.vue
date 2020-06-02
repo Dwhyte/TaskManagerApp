@@ -1,5 +1,5 @@
 <template>
-    <form @submit.prevent="createNewProject">
+        <form @submit.prevent="createNewProject">
         <div
             v-if="errors"
             :style="{ display: errors ? 'block' : 'none' }"
@@ -24,7 +24,7 @@
 <script>
     import { mapActions } from "vuex";
     export default {
-        name: "AddNewProject",
+        name: "AddNewProjectComponent",
         data() {
             return {
                 errors: null,
@@ -46,16 +46,13 @@
                      let newProject = await axios.post('/vue/add-new-project', this.form);
                      if(newProject.data.success) {
                          console.log(newProject)
-
                         // load new projects
                         // this.getProjects()
                         this.fetchProjects();
-
                         // clear form fields
                         this.form.name = ''
                         this.form.description = ''
                         this.form.is_completed = false
-
                         // close form
                         this.showNewProjectForm(false)
                         this.errors = null

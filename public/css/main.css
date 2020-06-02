@@ -155,3 +155,35 @@ i {
 .card-footer {
     background-color: #fff
 }
+
+    *, .flashpool {
+	    box-sizing: border-box
+    }
+    .flashpool {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        max-height: 400px;
+        width: 260px;
+        -webkit-perspective: 400px;
+        perspective: 400px
+    }
+    .flashpool .flash__message {
+        width: 260px;
+        transition: all .5s;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        font-family: Oxygen, sans-serif;
+        font-size: 13px;
+        line-height: 130%
+    }
+
+    .flash-enter, .flash-leave-to {
+        opacity: 0;
+        -webkit-transform: rotateX(-30deg) scale(.88) translateY(-30px);
+        transform: rotateX(-30deg) scale(.88) translateY(-30px)
+    }
+    .flash-leave-active {
+        position: absolute
+    }
