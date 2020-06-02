@@ -23,6 +23,10 @@
                 <label for="description">description</label>
                 <textarea class="form-control" id="description" rows="3" v-model="form.description"></textarea>
               </div>
+              <div class="form-group form-check">
+                <input type="checkbox" class="form-check-input" id="is_completed" v-model="form.is_completed">
+                <label class="form-check-label" for="is_completed">Completed?</label>
+              </div>
             </form>
              <template v-slot:modal-footer="{ ok, cancel, hide }">
               <!-- Emulate built in modal footer ok and cancel button actions -->
@@ -77,7 +81,7 @@
                     if(res.data.success) {
                         console.log(res.data)
 
-                        // fetch update task list
+                        // fetch updated task list
                         this.fetchTask(this.form.project_id)
 
                         // close modal window
