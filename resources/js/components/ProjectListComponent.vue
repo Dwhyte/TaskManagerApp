@@ -39,33 +39,13 @@
         components: {
             AddNewProjectComponent
         },
-
-        // () {
-        //     // load latest project first.
-        //     //   this.getProjectTasks(this.latestProjectID, this.latestProjectName)
-        //                   // this.getProjectTasks(12, 'Project Almanac')
-        //     // this.getProjectTasks(this.latestProjectID, this.latestProjectName)
-        //     // console.log(this.initialProject)
-        //     this.latestProjectID = this.initialProject.id
-        //     this.latestProjectName = this.initialProject.name
-        // },
-        created() {
-            // this.getProjectTasks(1, 'heyy')
-        },
         computed: {
         ...mapGetters({
-                initialProject: "GET_INITIAL_PROJECT",
                 selectedProjectID: "GET_SELECTED_PROJECT_ID",
                 selectedProjectName: "GET_SELECTED_PROJECT_NAME",
                 showForm: "GET_ADD_NEW_PROJECT_FORM"
             }),
 
-        },
-        watch: {
-            initialProject() {
-                this.latestProjectID = this.initialProject.id
-                this.latestProjectName = this.initialProject.name
-            }
         },
         methods: {
          ...mapActions({

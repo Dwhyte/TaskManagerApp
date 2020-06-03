@@ -82,8 +82,12 @@ export default {
             try {
                 let projects = await axios.get('/vue/get-projects');
                 if(projects.data) {
-                    // set initial latest project
-                    commit('SET_INITIAL_PROJECT', projects.data.data[0])
+                    // set initial latest project on first load.
+                    if(projects.data.data[0]) {
+                        commit('SET_INITIAL_PROJECT', projects.data.data[0])
+                        commit('SET_PROJECT_ID', projects.data.data[0].id)
+                        commit('SET_PROJECT_NAME', projects.data.data[0].name)
+                    }
 
                     // update projects state
                     commit('SET_PROJECTS', projects.data.data)
@@ -144,7 +148,8 @@ export default {
 
         storeCurrentProjectName({commit}, projectName) {
            commit("SET_PROJECT_NAME", projectName)
-        }
+        },
+
 
     }
 }
