@@ -22,4 +22,4 @@ Zip up the folder with your web application when you are finished and upload it 
 
 # My thoughts
 
-I created the app using vue.js but spent wayyy too much time in fiddle with it. I could not get the draggable to work change the priority because I haven't used any draggable and wasn't sure how to go about it.
+..... coming soon.
