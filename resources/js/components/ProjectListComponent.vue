@@ -30,24 +30,36 @@
     export default {
         props: ['projects'],
         name: "ProjectListComponent",
+        data() {
+            return {
+                latestProjectID: null,
+                latestProjectName: null
+            }
+        },
         components: {
             AddNewProjectComponent
         },
+
         // created() {
-        //      // load all projects on first creation
-        //     this.fetchProjects();
+        //     // load latest project first.
+        //       this.getProjectTasks(this.latestProjectID, this.latestProjectName)
         // },
         computed: {
         ...mapGetters({
-                // projects: "GET_PROJECTS",
+                initialProject: "GET_INITIAL_PROJECT",
                 selectedProjectID: "GET_SELECTED_PROJECT_ID",
                 selectedProjectName: "GET_SELECTED_PROJECT_NAME",
                 showForm: "GET_ADD_NEW_PROJECT_FORM"
-            })
+            }),
+        },
+        watch: {
+            initialProject() {
+                this.latestProjectID = this.initialProject.id
+                this.latestProjectName = this.initialProject.name
+            }
         },
         methods: {
          ...mapActions({
-              // fetchProjects: "FETCH_PROJECTS",
               fetchTasks: 'FETCH_PROJECT_TASKS',
               storeSelectedProjectID: "storeCurrentProjectID",
               storeSelectedProjectName: "storeCurrentProjectName",
@@ -57,13 +69,11 @@
 
           // Store selected tasks in vuex storage
             getProjectTasks(projectID, projectName) {
-             console.log(projectName)
+             console.log(projectID, projectName)
                 this.storeSelectedProjectID(projectID)
                 this.storeSelectedProjectName(projectName)
                 this.fetchTasks(projectID)
-                // this.storeTasks(tasks)
-                // console.log(tasks)
-            }
+            },
         },
     }
 </script>

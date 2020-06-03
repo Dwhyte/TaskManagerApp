@@ -1,15 +1,11 @@
 <template>
         <form @submit.prevent="createNewProject">
-        <div
-            v-if="errors"
-            :style="{ display: errors ? 'block' : 'none' }"
-            class="invalid-feedback"
-            >
-            {{ errors.name[0] }}
-        </div>
       <div class="form-group">
         <label for="project_name">Project Name</label>
         <input type="text" class="form-control" id="project_name" v-model="form.name">
+      <div class="invalid-feedback" v-if="errors.name" :style=" errors.name ? 'display: block;font-size: 97%;' : 'display: none;' ">
+        {{ errors.name[0] }}
+      </div>
       </div>
       <div class="form-group">
         <label for="description">Description</label>
@@ -27,7 +23,7 @@
         name: "AddNewProjectComponent",
         data() {
             return {
-                errors: null,
+                errors: {},
                 form: {
                     name: '',
                     description: '',
@@ -45,24 +41,30 @@
                  try {
                      let newProject = await axios.post('/vue/add-new-project', this.form);
                      if(newProject.data.success) {
-                         console.log(newProject)
+
                         // load new projects
-                        // this.getProjects()
                         this.fetchProjects();
+
                         // clear form fields
-                        this.form.name = ''
-                        this.form.description = ''
-                        this.form.is_completed = false
+                        this.clearFields()
+
                         // close form
                         this.showNewProjectForm(false)
-                        this.errors = null
+
+                         // flash message
+                        this.flash(`Created A New Project: ${newProject.data.data.name}`, "success flash__message");
                      }
                  } catch (error) {
-                     console.log('ERROR')
-                     console.log(error.response)
                     this.errors = error.response.data
                  }
               },
+
+            clearFields() {
+                this.form.name = ''
+                this.form.description = ''
+                this.form.is_completed = false
+                this.errors = {}
+            }
         }
     }
 </script>

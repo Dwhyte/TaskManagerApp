@@ -4,14 +4,14 @@
           <template v-slot:modal-header="{ close }">
               <!-- Emulate built in modal header close button action -->
               <h5>Add New Task</h5>
-              <b-button size="sm" variant="outline-danger" @click="close()">
-                Close Modal
-              </b-button>
           </template>
           <form>
               <div class="form-group">
                 <label for="task_name">Task Name</label>
-                <input type="text" class="form-control" id="task_name" v-model="form.task_name">
+                <input type="text" class="form-control" id="task_name"  v-model="form.task_name">
+                  <div class="invalid-feedback" v-if="errors.task_name" :style=" errors.task_name ? 'display: block;font-size: 97%;' : 'display: none;' ">
+                    {{ errors.task_name[0] }}
+                  </div>
               </div>
               <div class="form-group">
                 <label for="priority">Priority</label>
@@ -22,6 +22,9 @@
               <div class="form-group">
                 <label for="description">description</label>
                 <textarea class="form-control" id="description" rows="3" v-model="form.description"></textarea>
+                  <div class="invalid-feedback" v-if="errors.description" :style=" errors.task_name ? 'display: block;font-size: 97%;' : 'display: none;' ">
+                    {{ errors.description[0] }}
+                  </div>
               </div>
               <div class="form-group form-check">
                 <input type="checkbox" class="form-check-input" id="is_completed" v-model="form.is_completed">
@@ -33,7 +36,7 @@
               <b-button size="sm" variant="success" @click="addTask">
                 Create
               </b-button>
-              <b-button size="sm" variant="danger" @click="cancel(hideModal)">
+              <b-button size="sm" variant="danger" @click="hideModal">
                 Cancel
               </b-button>
             </template>
@@ -62,6 +65,7 @@
                     is_completed: false
 
                 },
+                errors: {}
             }
         },
         computed: {
@@ -83,7 +87,6 @@
                 try {
                    let newTask = await axios.post('/vue/add-new-task', this.form)
                    if (newTask.data.success) {
-                        console.log(newTask.data)
 
                        // fetch updated task list
                         this.fetchTask(newTask.data.data.project_id)
@@ -93,15 +96,18 @@
 
                         // close modal window
                         this.hideModal()
+
+                       // flash message
+                        this.flash(`Created A New Task: ${newTask.data.data.task_name}`, "success flash__message");
                    }
                 } catch (error) {
-                   console.log(error.response)
-                    this.errors = error.response
+                    this.errors = error.response.data
                 }
             },
 
             // on click, hide modal
             hideModal() {
+              this.clearForm()
               this.$root.$emit('bv::hide::modal', 'modal-2', '#btnShow')
             },
 
@@ -111,7 +117,7 @@
                 this.form.description = ''
                 this.form.priority_level = ''
                 this.is_completed = false
-                this.errors = null
+                this.errors = {}
             }
 
         },

@@ -5,6 +5,7 @@ Vue.use(Vuex);
 
 export default {
     state: {
+        initialProject: null,
         selectedProjectID: null,
         selectedProjectName: null,
         selectedProjectTasks: null,
@@ -16,6 +17,9 @@ export default {
     },
 
     getters: {
+        GET_INITIAL_PROJECT(state) {
+            return state.initialProject
+        },
         GET_SELECTED_PROJECT_ID(state) {
             return state.selectedProjectID
         },
@@ -43,6 +47,9 @@ export default {
     },
 
     mutations: {
+        SET_INITIAL_PROJECT(state, data) {
+            state.initialProject = data
+        },
         SET_PROJECT_ID(state, id) {
             state.selectedProjectID = id;
         },
@@ -75,6 +82,9 @@ export default {
             try {
                 let projects = await axios.get('/vue/get-projects');
                 if(projects.data) {
+                    // set initial latest project
+                    commit('SET_INITIAL_PROJECT', projects.data.data[0])
+
                     // update projects state
                     commit('SET_PROJECTS', projects.data.data)
                 }

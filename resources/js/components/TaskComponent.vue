@@ -59,9 +59,10 @@
 
                         // fetch updated task list
                         this.fetchTask(this.task.project_id)
-                        // this.flashSuccess(`Removed Task: ${this.task.task_name}`);
+
+                        // flash message
                         this.flash(`Removed Task: ${this.task.task_name}`, "success flash__message");
-                        // this.flash(res.data.message, "info flash__message");
+
                     })
                     .catch(err => console.log(err))
               }
