@@ -44,15 +44,12 @@ Vue.use(VueAxios, axios);
 Vue.use(VueDraggable);
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
-Vue.use(VueFlashMessage);
-// Vue.use(VueFlashMessage, {
-//   messageOptions: {
-//     timeout: 1000,
-//     important: true,
-//     autoEmit: false,
-//     pauseOnInteract: true
-//   }
-// });
+Vue.use(VueFlashMessage, {
+  messageOptions: {
+    timeout: 5000,
+    pauseOnInteract: true
+  }
+});
 
 const store = new Vuex.Store(StoreData);
 

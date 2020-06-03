@@ -23,6 +23,7 @@ class TaskController extends Controller
             ->orderByRaw("tasks.priority_level = 'important' DESC")
             ->orderByRaw("tasks.priority_level = 'normal' DESC")
             ->orderByRaw("tasks.priority_level = 'low' DESC")
+            ->orderBy('updated_at', 'DESC')
             ->get();
 
         // return results in JSON format

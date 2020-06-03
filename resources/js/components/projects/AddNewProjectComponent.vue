@@ -52,7 +52,7 @@
                         this.showNewProjectForm(false)
 
                          // flash message
-                        this.flash(`Created A New Project: ${newProject.data.data.name}`, "success flash__message");
+                        this.flash(`Created A New Project: <strong>${newProject.data.data.name}<strong>`, "success flash__message");
                      }
                  } catch (error) {
                     this.errors = error.response.data
