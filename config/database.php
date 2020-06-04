@@ -1,14 +1,9 @@
 <?php
 
 use Illuminate\Support\Str;
-$DATABASE_URL=parse_url(env('DATABASE_URL'));
+//$DATABASE_URL=parse_url(env('DATABASE_URL'));
 
-//if(env('APP_ENV') === 'local') {
-////        printf('IT WORKEDDDDDDDDD');
-//      $default_connection = env('DB_CONNECTION', 'mysql');
-//} else {
-//   $default_connection = env('DB_CONNECTION', 'pgsql');
-//}
+$default_connection = env('APP_ENV') === 'local' ? env('DB_CONNECTION', 'mysql') : env('DB_CONNECTION', 'pgsql');
 
 return [
 
@@ -24,9 +19,9 @@ return [
     */
 
 
-    'default' => env('DB_CONNECTION', 'mysql'),
+//    'default' => env('DB_CONNECTION', 'mysql'),
 //    'default' => env('DB_CONNECTION', 'pgsql'),
-//    'default' => $default_connection,
+    'default' => $default_connection,
 
     /*
     |--------------------------------------------------------------------------
