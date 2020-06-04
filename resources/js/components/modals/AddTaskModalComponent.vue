@@ -22,7 +22,7 @@
               <div class="form-group">
                 <label for="description">description</label>
                 <textarea class="form-control" id="description" rows="3" v-model="form.description"></textarea>
-                  <div class="invalid-feedback" v-if="errors.description" :style=" errors.task_name ? 'display: block;font-size: 97%;' : 'display: none;' ">
+                  <div class="invalid-feedback" v-if="errors.description" :style=" errors.description ? 'display: block;font-size: 97%;' : 'display: none;' ">
                     {{ errors.description[0] }}
                   </div>
               </div>
@@ -99,6 +99,7 @@
 
                        // flash message
                         this.flash(`Created A New Task:<br> <strong>${newTask.data.data.task_name}</strong>`, "success flash__message");
+
                    }
                 } catch (error) {
                     this.errors = error.response.data
