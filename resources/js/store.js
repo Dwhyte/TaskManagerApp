@@ -131,19 +131,21 @@ export default {
                if(confirm("Are you sure? This will remove current project and all tasks assigned to it.")) {
                    let res = await axios.post(`/vue/remove-project/${projectID}`)
                    if(res.data.success) {
+                        // clear
+                       dispatch('clearAllSelectedProjects')
 
                        // remove current project
-                       dispatch('storeCurrentProjectID', null)
-                       dispatch('storeCurrentProjectName', null)
+                       // dispatch('storeCurrentProjectID', null)
+                       // dispatch('storeCurrentProjectName', null)
 
                        // retrieve latest projects
-                        dispatch('FETCH_PROJECTS')
+                       //  dispatch('FETCH_PROJECTS')
 
                        // retrieve latest project task
                        // if selectedProjectID is not null
-                       if(this.state.selectedProjectID) {
-                        dispatch('FETCH_PROJECT_TASKS', this.state.selectedProjectID)
-                       }
+                       // if(this.state.selectedProjectID) {
+                       //  dispatch('FETCH_PROJECT_TASKS', this.state.selectedProjectID)
+                       // }
 
                        // flash message
                        Vue.prototype.$flashStorage.flash(`Project Removed!`, "success flash__message", {
@@ -182,6 +184,14 @@ export default {
         storeCurrentProjectName({commit}, projectName) {
            commit("SET_PROJECT_NAME", projectName)
         },
+
+        // Clear everything
+        clearAllSelectedProjects({commit}) {
+           commit("SET_PROJECT_ID", null)
+           commit("SET_PROJECT_NAME", null)
+           commit("SET_PROJECT_ID", null)
+           commit("SET_PROJECT_TASKS", null)
+        }
 
 
     }
