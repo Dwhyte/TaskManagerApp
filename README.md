@@ -1,6 +1,7 @@
-# Live Demo
+# Live Demo 
 http://secret-brook-20079.herokuapp.com/
 -
+  - A little slow opening up the site. App is currently hosted on a free hobbyist Heroku account, which sleeps the server after a period of no inactivity. 
   - Create an account to see taskManager
   - Create some projects and tasks :-)
 
