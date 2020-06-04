@@ -27,3 +27,5 @@ Zip up the folder with your web application when you are finished and upload it 
   - Create a new account and you should be able to create a new project and new tasks.
 
 # Screenshots
+<img src="https://res.cloudinary.com/duzsc1kx7/image/upload/v1591272520/Screenshots/TaskManagerScreenshot2.png"
+     alt="screenshot of taskmanager" />
