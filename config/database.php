@@ -2,6 +2,14 @@
 
 use Illuminate\Support\Str;
 $DATABASE_URL=parse_url(env('DATABASE_URL'));
+
+//if(env('APP_ENV') === 'local') {
+////        printf('IT WORKEDDDDDDDDD');
+//      $default_connection = env('DB_CONNECTION', 'mysql');
+//} else {
+//   $default_connection = env('DB_CONNECTION', 'pgsql');
+//}
+
 return [
 
     /*
@@ -15,8 +23,10 @@ return [
     |
     */
 
-//    'default' => env('DB_CONNECTION', 'mysql'),
-    'default' => env('DB_CONNECTION', 'pgsql'),
+
+    'default' => env('DB_CONNECTION', 'mysql'),
+//    'default' => env('DB_CONNECTION', 'pgsql'),
+//    'default' => $default_connection,
 
     /*
     |--------------------------------------------------------------------------
@@ -64,32 +74,32 @@ return [
             ]) : [],
         ],
 
-//        'pgsql' => [
-//            'driver' => 'pgsql',
-//            'url' => env('DATABASE_URL'),
-//            'host' => env('DB_HOST', '127.0.0.1'),
-//            'port' => env('DB_PORT', '5432'),
-//            'database' => env('DB_DATABASE', 'forge'),
-//            'username' => env('DB_USERNAME', 'forge'),
-//            'password' => env('DB_PASSWORD', ''),
-//            'charset' => 'utf8',
-//            'prefix' => '',
-//            'prefix_indexes' => true,
-//            'schema' => 'public',
-//            'sslmode' => 'prefer',
-//        ],
         'pgsql' => [
             'driver' => 'pgsql',
-            'host' => $DATABASE_URL["host"],
-            'port' => $DATABASE_URL["port"],
-            'database' => ltrim($DATABASE_URL["path"], "/"),
-            'username' => $DATABASE_URL["user"],
-            'password' => $DATABASE_URL["pass"],
+            'url' => env('DATABASE_URL'),
+            'host' => env('DB_HOST', '127.0.0.1'),
+            'port' => env('DB_PORT', '5432'),
+            'database' => env('DB_DATABASE', 'forge'),
+            'username' => env('DB_USERNAME', 'forge'),
+            'password' => env('DB_PASSWORD', ''),
             'charset' => 'utf8',
             'prefix' => '',
+            'prefix_indexes' => true,
             'schema' => 'public',
-            'sslmode' => 'require',
+            'sslmode' => 'prefer',
         ],
+//        'pgsql' => [
+//            'driver' => 'pgsql',
+//            'host' => $DATABASE_URL["host"],
+//            'port' => $DATABASE_URL["port"],
+//            'database' => ltrim($DATABASE_URL["path"], "/"),
+//            'username' => $DATABASE_URL["user"],
+//            'password' => $DATABASE_URL["pass"],
+//            'charset' => 'utf8',
+//            'prefix' => '',
+//            'schema' => 'public',
+//            'sslmode' => 'require',
+//        ],
 
         'sqlsrv' => [
             'driver' => 'sqlsrv',
