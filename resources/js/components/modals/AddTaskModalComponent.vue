@@ -98,7 +98,7 @@
                         this.hideModal()
 
                        // flash message
-                        this.flash(`Created A New Task: <strong>${newTask.data.data.task_name}</strong>`, "success flash__message");
+                        this.flash(`Created A New Task:<br> <strong>${newTask.data.data.task_name}</strong>`, "success flash__message");
                    }
                 } catch (error) {
                     this.errors = error.response.data

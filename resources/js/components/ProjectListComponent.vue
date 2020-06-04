@@ -1,12 +1,14 @@
 <template>
     <div class="card-hover-shadow-2x mb-3 card">
         <div class="card-header-tab card-header">
-            <div class="card-header-title font-size-lg text-capitalize font-weight-normal"><i class="fa fa-tasks"></i>&nbsp;My Projects</div>
+            <div class="card-header-title font-size-lg text-capitalize font-weight-normal"><i class="fa fa-tasks"></i>&nbsp;<h4 class="ml-2 mb-0">My Projects</h4></div>
         </div>
         <div class="scroll-area-sm">
             <AddNewProjectComponent v-if="showForm"></AddNewProjectComponent>
             <ul v-else>
-                <div v-if="!projects" style="padding: 17px">Create a new Project</div>
+                <div v-if="projects && projects.length === 0"  class="alert alert-info" role="alert">
+                    <h5 class="alert-heading">Create a new project</h5>
+                </div>
                 <li
                     v-else
                     v-for="project in projects"
@@ -33,7 +35,7 @@
         data() {
             return {
                 latestProjectID: null,
-                latestProjectName: null
+                latestProjectName: null,
             }
         },
         components: {

@@ -90,7 +90,7 @@
                         this.hideModal()
 
                         // flash message
-                        this.flash(`Updated Task: ${res.data.data.task_name}`, "success flash__message");
+                        this.flash(`Updated Task:<br> ${res.data.data.task_name}`, "success flash__message");
 
                         // clear errors
                         this.errors = {}

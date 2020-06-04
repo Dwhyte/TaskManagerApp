@@ -21,10 +21,10 @@
                             <div class="ps-content">
                                 <ul class="list-group list-group-flush">
                                     <div v-if="!selectedProjectID"  class="alert alert-warning" role="alert">
-                                      <h4 class="alert-heading">Select a project to get started</h4>
+                                      <h5 class="alert-heading">Select a project to get started</h5>
                                     </div>
                                     <div v-else-if="tasks.length === 0 && selectedProjectID" class="alert alert-info" role="alert">
-                                          <h4 class="alert-heading">You have no task for this project.</h4>
+                                          <h5 class="alert-heading">You have no task for this project.</h5>
                                           <p>Select "Create New Task" to add a task to this project.</p>
                                     </div>
                                     <task-component v-else v-for="task in tasks" :task="task" :key="task.id"></task-component>
@@ -32,8 +32,9 @@
                             </div>
                         </div>
                 </div>
-                <div class="d-block text-right card-footer">
-                    <button class="btn btn-primary" @click="showModal" v-if="selectedProjectID">Create New Task</button>
+                <div class="d-block text-right card-footer" v-if="selectedProjectID">
+                    <button class="btn btn-primary" @click="showModal">Create New Task</button>
+                    <button class="btn btn-danger" @click="removeProject(selectedProjectID)">Delete Project</button>
                 </div>
         </div>
     </div>
@@ -67,7 +68,8 @@
         methods: {
           ...mapActions({
               fetchProjects: "FETCH_PROJECTS",
-              showTaskForm: "showTaskForm"
+              showTaskForm: "showTaskForm",
+              removeProject: "DESTROY_PROJECT"
           }),
 
             showModal() {

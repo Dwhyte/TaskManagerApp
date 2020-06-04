@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
 Auth::routes();
@@ -34,7 +34,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/project/{project_id}', 'ProjectController@show');
 
         Route::post('/add-new-project', 'ProjectController@newProject');
-        Route::post('/remove-project{project}', 'ProjectController@removeProject');
+        Route::post('/remove-project/{project}', 'ProjectController@removeProject');
 
         Route::post('/project/tasks/{project}', 'TaskController@getAllTasks');
         Route::post('/add-new-task', 'TaskController@store');

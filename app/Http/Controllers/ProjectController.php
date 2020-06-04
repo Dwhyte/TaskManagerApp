@@ -93,6 +93,12 @@ class ProjectController extends Controller
     }
 
 
+    /**
+     * Remove a Project and all its tasks
+     * @param Project $project
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
+     */
     public function removeProject(Project $project)
     {
         $project->delete();

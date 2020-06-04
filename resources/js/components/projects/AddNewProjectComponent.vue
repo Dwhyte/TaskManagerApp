@@ -10,6 +10,9 @@
       <div class="form-group">
         <label for="description">Description</label>
         <textarea class="form-control" id="description" rows="3" v-model="form.description"></textarea>
+          <div class="invalid-feedback" v-if="errors.description" :style=" errors.description ? 'display: block;font-size: 97%;' : 'display: none;' ">
+        {{ errors.description[0] }}
+        </div>
       </div>
       <div class="form-group">
           <button type="submit" style="width: 100%;" class="mr-2 btn btn-success">Save</button>
@@ -52,7 +55,7 @@
                         this.showNewProjectForm(false)
 
                          // flash message
-                        this.flash(`Created A New Project: <strong>${newProject.data.data.name}<strong>`, "success flash__message");
+                        this.flash(`Created A New Project:<br/><br/><strong>${newProject.data.data.name}<strong>`, "success flash__message");
                      }
                  } catch (error) {
                     this.errors = error.response.data

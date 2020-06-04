@@ -24,6 +24,7 @@
                             {{ task.priority_level }}
                         </div>
                     </div>
+                    <div class="widget-subheading"><i>{{ task.description }}</i></div>
                 </div>
                 <div class="widget-content-right">
                     <button class="border-0 btn-transition btn btn-outline-success"

@@ -6,6 +6,7 @@ Vue.use(Vuex);
 export default {
     state: {
         initialProject: null,
+        initialTasks: null,
         selectedProjectID: null,
         selectedProjectName: null,
         selectedProjectTasks: null,
@@ -78,7 +79,7 @@ export default {
 
     actions: {
         // fetch all projects
-       async FETCH_PROJECTS({ commit }) {
+       async FETCH_PROJECTS({ commit, dispatch }) {
             try {
                 let projects = await axios.get('/vue/get-projects');
                 if(projects.data) {
@@ -87,6 +88,7 @@ export default {
                         commit('SET_INITIAL_PROJECT', projects.data.data[0])
                         commit('SET_PROJECT_ID', projects.data.data[0].id)
                         commit('SET_PROJECT_NAME', projects.data.data[0].name)
+                        dispatch('FETCH_PROJECT_TASKS', projects.data.data[0].id)
                     }
 
                     // update projects state
@@ -116,9 +118,40 @@ export default {
            try {
                 let res = await axios.post(`/vue/update/${taskData.taskID}`, taskData)
                 if(res.data.success) {
+                    // retrieve latest projects
                     dispatch('FETCH_PROJECTS')
-                    console.log('update worked from here')
                 }
+           } catch(error) {
+               console.log(error.response.data)
+           }
+        },
+
+        async DESTROY_PROJECT({commit, dispatch}, projectID) {
+           try {
+               if(confirm("Are you sure? This will remove current project and all tasks assigned to it.")) {
+                   let res = await axios.post(`/vue/remove-project/${projectID}`)
+                   if(res.data.success) {
+
+                       // remove current project
+                       dispatch('storeCurrentProjectID', null)
+                       dispatch('storeCurrentProjectName', null)
+
+                       // retrieve latest projects
+                        dispatch('FETCH_PROJECTS')
+
+                       // retrieve latest project task
+                       // if selectedProjectID is not null
+                       if(this.state.selectedProjectID) {
+                        dispatch('FETCH_PROJECT_TASKS', this.state.selectedProjectID)
+                       }
+
+                       // flash message
+                       Vue.prototype.$flashStorage.flash(`Project Removed!`, "success flash__message", {
+                           timeout: 5000,
+                           pauseOnInteract: true
+                       });
+                   }
+               }
            } catch(error) {
                console.log(error.response.data)
            }
