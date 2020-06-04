@@ -139,7 +139,7 @@ export default {
                        // dispatch('storeCurrentProjectName', null)
 
                        // retrieve latest projects
-                       //  dispatch('FETCH_PROJECTS')
+                        dispatch('FETCH_PROJECTS')
 
                        // retrieve latest project task
                        // if selectedProjectID is not null
