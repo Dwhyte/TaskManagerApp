@@ -79,7 +79,7 @@ class ProjectController extends Controller
 
     }
 
-    public function EditProject(Project $project, Request $request)
+    public function editProject(Project $project, Request $request)
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required'

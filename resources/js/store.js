@@ -93,17 +93,19 @@ export default {
 
     actions: {
         // fetch all projects
-       async FETCH_PROJECTS({ commit, dispatch }) {
+       async FETCH_PROJECTS({ commit, dispatch }, option = true) {
             try {
                 let projects = await axios.get('/vue/get-projects');
                 if(projects.data) {
-                    // set initial latest project on first load.
-                    if(projects.data.data[0]) {
-                        commit('SET_INITIAL_PROJECT', projects.data.data[0])
-                        commit('SET_PROJECT_ID', projects.data.data[0].id)
-                        commit('SET_PROJECT_NAME', projects.data.data[0].name)
-                        commit('SET_PROJECT_DESCRIPTION', projects.data.data[0].description)
-                        dispatch('FETCH_PROJECT_TASKS', projects.data.data[0].id)
+                    if(option) {
+                        // set initial latest project on first load.
+                        if(projects.data.data[0]) {
+                            commit('SET_INITIAL_PROJECT', projects.data.data[0])
+                            commit('SET_PROJECT_ID', projects.data.data[0].id)
+                            commit('SET_PROJECT_NAME', projects.data.data[0].name)
+                            commit('SET_PROJECT_DESCRIPTION', projects.data.data[0].description)
+                            dispatch('FETCH_PROJECT_TASKS', projects.data.data[0].id)
+                        }
                     }
 
                     // update projects state
@@ -122,6 +124,7 @@ export default {
                if(tasks.data){
                    // update tasks state
                    commit('SET_ALL_TASKS', tasks.data.data)
+                   commit('SET_EDIT_PROJECT_FORM_STATUS', false)
                }
            }  catch (error) {
                console.log(error.response.data)
@@ -174,6 +177,11 @@ export default {
            }
         },
 
+        setInitialProject({commit}, data) {
+           commit('SET_INITIAL_PROJECT', data)
+            console.log('DID IT DO SOMETHING ?')
+        },
+
         // update project form status = true/false
         showNewProjectForm({commit}, value) {
            commit("SET_ADD_NEW_PROJECT_FORM", value)
@@ -186,7 +194,7 @@ export default {
 
         // update project form status = true/false
         showEditProject({ commit }, status) {
-           commit('SET_EDIT_PROJECT_FORM_STATUS0', status)
+           commit('SET_EDIT_PROJECT_FORM_STATUS', status)
         },
 
         selectedTask({commit}, task) {
@@ -207,6 +215,13 @@ export default {
 
         storeCurrentProjectDescription({ commit }, projectDescription) {
            commit('SET_PROJECT_DESCRIPTION', projectDescription)
+        },
+
+        // Reset Current Project
+        UPDATE_CURRENT_PROJECT({commit}, data) {
+           commit("SET_PROJECT_ID", data.id)
+           commit("SET_PROJECT_NAME", data.name)
+           commit('SET_PROJECT_DESCRIPTION', data.description)
         },
 
         // Clear everything

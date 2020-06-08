@@ -25,9 +25,10 @@
                                 >Edit Project
                                 </h4>
                                 <button
-                                    class="border-0 btn-transition btn btn-outline-success"
+                                    class="border-0 btn-transition btn"
+                                    :class="showEditProject ? 'btn-outline-secondary': 'btn-outline-success'"
                                     :title="showEditProject ? 'Close Window':'Edit Project'"
-                                    @click="showEditProject = !showEditProject">
+                                    @click="!showEditProject ? toggleProjectForm(true) : toggleProjectForm(false)">
                                     <i :class="showEditProject ? 'fa fa-times' : 'fa fa-pencil'"></i>
                                 </button>
                                 <button
@@ -78,11 +79,6 @@
             AddTaskModalComponent,
             EditProjectComponent
         },
-        data() {
-            return {
-                showEditProject: false
-            }
-        },
         created() {
              // load all projects on first creation
             this.fetchProjects();
@@ -94,13 +90,15 @@
                 selectedProjectName: "GET_SELECTED_PROJECT_NAME",
                 selectedProjectDesc: "GET_SELECTED_PROJECT_DESCRIPTION",
                 tasks: "GET_ALL_TASKS",
+                showEditProject: "GET_EDIT_PROJECT_FORM_STATUS"
             })
         },
         methods: {
           ...mapActions({
               fetchProjects: "FETCH_PROJECTS",
               showTaskForm: "showTaskForm",
-              removeProject: "DESTROY_PROJECT"
+              removeProject: "DESTROY_PROJECT",
+              toggleProjectForm: "showEditProject"
           }),
 
             showModal() {
