@@ -79,6 +79,26 @@ class ProjectController extends Controller
 
     }
 
+    public function EditProject(Project $project, Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required'
+        ]);
+
+        // check if validator fails and return errors
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+
+        $project->name = $request->name;
+        $project->description = $request->description;
+        $project->is_completed = $request->is_completed;
+        $project->save();
+
+        return response()->json(['success' => true, 'data' => $project, 'message' => 'Project Updated!'], 200);
+
+    }
+
     /**
      * Mark project as complete
      * @param Project $task

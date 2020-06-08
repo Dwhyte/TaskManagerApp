@@ -9,13 +9,35 @@
         </div>
         <div class="col-md-9">
                 <div class="card-hover-shadow-2x mb-3 card">
-                <div class="card-header-tab card-header" :style="selectedProjectName ? 'height: 4.5rem;' : 'height: 3.5rem;'">
-                    <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
-                        <div v-if="selectedProjectName">
-                            <h4 class=" mb-0 "><i class="fa fa-tasks"></i> {{ selectedProjectName }}</h4>
-                            <i v-if="selectedProjectDesc" class="widget-subheading">{{ selectedProjectDesc }}</i>
+                <div class="card-header-tab card-header"
+                     :style="showEditProject ? 'height: 8.5rem;' : 'height: 4.5rem;'">
+                    <div class="card-header-title font-size-lg text-capitalize font-weight-normal" style="width: 100%;">
+                        <div v-if="selectedProjectName" style="width: 100%;">
+                            <h4 v-if="!showEditProject" class=" mb-0 mt-3 "><i class="fa fa-tasks"></i> {{ selectedProjectName }}</h4>
+                            <EditProjectComponent v-if="showEditProject"></EditProjectComponent>
+                            <i v-if="selectedProjectDesc && !showEditProject" class="widget-subheading">{{ selectedProjectDesc }}</i>
+                            <div
+                                class="float-right"
+                                style="position: relative;bottom: 29px;">
+                                <h4
+                                    v-if="showEditProject"
+                                    style="position: absolute;right: 12px;bottom: 57px;"
+                                >Edit Project
+                                </h4>
+                                <button
+                                    class="border-0 btn-transition btn btn-outline-success"
+                                    :title="showEditProject ? 'Close Window':'Edit Project'"
+                                    @click="showEditProject = !showEditProject">
+                                    <i :class="showEditProject ? 'fa fa-times' : 'fa fa-pencil'"></i>
+                                </button>
+                                <button
+                                    class="border-0 btn-transition btn btn-outline-danger"
+                                    @click="removeProject(selectedProjectID)">
+                                    <i class="fa fa-trash"></i>
+                                </button>
+                            </div>
                         </div>
-                       <h4 else class="ml-2 mb-0" v-else>Tasks</h4>
+                       <h4 else class="ml-2 mb-0" v-else><i class="fa fa-tasks"></i> Tasks</h4>
                     </div>
                 </div>
                 <div class="scroll-area-sm">
@@ -36,7 +58,6 @@
                 </div>
                 <div class="d-block text-right card-footer" v-if="selectedProjectID">
                     <button class="btn btn-primary" @click="showModal">Create New Task</button>
-                    <button class="btn btn-danger" @click="removeProject(selectedProjectID)">Delete Project</button>
                 </div>
         </div>
     </div>
@@ -48,12 +69,19 @@
     import TaskComponent from "./TaskComponent";
     import EditTaskModalComponent from "./modals/EditTaskModalComponent";
     import AddTaskModalComponent from "./modals/AddTaskModalComponent";
+    import EditProjectComponent from "./projects/EditProjectComponent";
     export default {
         name: "TaskManagerComponent.vue",
         components: {
             TaskComponent,
             EditTaskModalComponent,
-            AddTaskModalComponent
+            AddTaskModalComponent,
+            EditProjectComponent
+        },
+        data() {
+            return {
+                showEditProject: false
+            }
         },
         created() {
              // load all projects on first creation
@@ -78,6 +106,7 @@
             showModal() {
               this.$root.$emit('bv::show::modal', 'modal-2', '#btnShow')
             },
+
         },
     }
 </script>

@@ -34,8 +34,8 @@
         name: "ProjectListComponent",
         data() {
             return {
-                latestProjectID: null,
-                latestProjectName: null,
+                // latestProjectID: null,
+                // latestProjectName: null,
             }
         },
         components: {

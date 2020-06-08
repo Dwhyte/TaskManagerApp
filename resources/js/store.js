@@ -16,6 +16,7 @@ export default {
         projects: null,
         showAddNewProjectForm: false,
         showTaskForm: false,
+        showEditProjectForm: false
     },
 
     getters: {
@@ -48,6 +49,9 @@ export default {
         },
         GET_TASK_FORM_STATUS(state) {
             return state.showTaskForm
+        },
+        GET_EDIT_PROJECT_FORM_STATUS(state) {
+            return state.showEditProjectForm
         }
     },
 
@@ -81,6 +85,9 @@ export default {
         } ,
         SET_TASK_FORM_STATUS(state, status) {
             state.showTaskForm = status
+        },
+        SET_EDIT_PROJECT_FORM_STATUS(state, status) {
+            state.showEditProjectForm = status
         }
     },
 
@@ -175,6 +182,11 @@ export default {
         // update task form status = true/false
         showTaskForm({commit}, status) {
            commit("SET_TASK_FORM_STATUS", status)
+        },
+
+        // update project form status = true/false
+        showEditProject({ commit }, status) {
+           commit('SET_EDIT_PROJECT_FORM_STATUS0', status)
         },
 
         selectedTask({commit}, task) {
