@@ -1,10 +1,27 @@
 <template>
     <div>
         <form @submit.prevent="updateProject">
-            <input class="form-control mb-2 mt-4" type="text" name="project_name" v-model="form.name" placeholder="project name" style="width: 50%;">
-            <input class="form-control" type="text" name="project_desc" v-model="form.description" placeholder="project description" style="width: 50%;">
+            <input
+                class="form-control mb-2 mt-4"
+                :class="errors.name ? 'is-invalid' : ''"
+                type="text" name="project_name"
+                v-model="form.name"
+                placeholder="project name"
+                style="width: 50%;">
+            <input
+                class="form-control"
+                type="text"
+                name="project_desc"
+                v-model="form.description"
+                placeholder="project description" style="width: 50%;">
 <!--        <input type="checkbox" class="form-check-input" id="is_completed" v-model="form.is_completed">-->
-            <button style="position: absolute;right: 81px;top: 78px;" type="submit" class="mr-2 btn btn-sm btn-success">Update</button>
+            <button
+                style="position: absolute;right: 81px;top: 78px;"
+                type="submit"
+                class="mr-2 btn btn-sm btn-success"
+            >
+                Update
+            </button>
         </form>
     </div>
 </template>
@@ -50,7 +67,6 @@
                     let res = await axios.post(`/vue/edit-project/${this.form.id}`, this.form);
                     if (res.data.success) {
                         // console.log(res.data)
-                        // set this to current project
                         const RES_DATA = {
                             id: res.data.data.id,
                             name: res.data.data.name,
@@ -63,7 +79,7 @@
                         // set to false - (so initial project is not loaded from DB projects list)
                         this.fetchProjects(false)
 
-                        // this.setInitialProject(RES_DATA)
+                        // set this to current project
                         this.setCurrentProject(RES_DATA);
 
                         // close form

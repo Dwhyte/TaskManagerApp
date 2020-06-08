@@ -32,12 +32,6 @@
     export default {
         props: ['projects'],
         name: "ProjectListComponent",
-        data() {
-            return {
-                // latestProjectID: null,
-                // latestProjectName: null,
-            }
-        },
         components: {
             AddNewProjectComponent
         },
