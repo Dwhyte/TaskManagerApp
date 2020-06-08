@@ -1,6 +1,7 @@
-# Live Demo
+# Live Demo 
 http://secret-brook-20079.herokuapp.com/
 -
+  - A little slow opening up the site. App is currently hosted on a free hobbyist Heroku account, which sleeps the server after a period of no inactivity. 
   - Create an account to see taskManager
   - Create some projects and tasks :-)
 
@@ -27,3 +28,9 @@ Zip up the folder with your web application when you are finished and upload it 
   - Create a new account and you should be able to create a new project and new tasks.
 
 # Screenshots
+<img src="https://res.cloudinary.com/duzsc1kx7/image/upload/v1591272520/Screenshots/TaskManagerScreenshot2.png"
+     alt="screenshot of taskmanager" />
+     
+<img src="https://res.cloudinary.com/duzsc1kx7/image/upload/v1591272520/Screenshots/TaskManagerScreenshot3.png"
+     alt="screenshot of taskmanager" />
+     
