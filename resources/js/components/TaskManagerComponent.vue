@@ -9,11 +9,13 @@
         </div>
         <div class="col-md-9">
                 <div class="card-hover-shadow-2x mb-3 card">
-                <div class="card-header-tab card-header">
+                <div class="card-header-tab card-header" :style="selectedProjectName ? 'height: 4.5rem;' : 'height: 3.5rem;'">
                     <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
-                        <i class="fa fa-tasks"></i>
-                       <h4 class="ml-2 mb-0" v-if="selectedProjectName"> Project - {{ selectedProjectName }}</h4>
-                       <h4 class="ml-2 mb-0" v-else>Tasks</h4>
+                        <div v-if="selectedProjectName">
+                            <h4 class=" mb-0 "><i class="fa fa-tasks"></i> {{ selectedProjectName }}</h4>
+                            <i v-if="selectedProjectDesc" class="widget-subheading">{{ selectedProjectDesc }}</i>
+                        </div>
+                       <h4 else class="ml-2 mb-0" v-else>Tasks</h4>
                     </div>
                 </div>
                 <div class="scroll-area-sm">
@@ -62,6 +64,7 @@
                 projects: 'GET_PROJECTS',
                 selectedProjectID: "GET_SELECTED_PROJECT_ID",
                 selectedProjectName: "GET_SELECTED_PROJECT_NAME",
+                selectedProjectDesc: "GET_SELECTED_PROJECT_DESCRIPTION",
                 tasks: "GET_ALL_TASKS",
             })
         },

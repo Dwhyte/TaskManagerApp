@@ -29,7 +29,7 @@ class ProjectController extends Controller
 //            ->get();
 
         $projects = Project::where('user_id', '=', $user->id)
-            ->select('id', 'user_id', 'name')
+            ->select('id', 'user_id', 'name', 'description')
             ->latest()
             ->get();
 

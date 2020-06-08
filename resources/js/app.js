@@ -17,6 +17,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import VueFlashMessage from 'vue-flash-message';
 require("vue-flash-message/dist/vue-flash-message.min.css");
 
+Vue.config.productionTip = false;
 
 /**
  * The following block of code may be used to automatically register your

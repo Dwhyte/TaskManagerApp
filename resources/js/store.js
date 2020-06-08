@@ -9,6 +9,7 @@ export default {
         initialTasks: null,
         selectedProjectID: null,
         selectedProjectName: null,
+        selectedProjectDescription: null,
         selectedProjectTasks: null,
         task: null,
         tasks: [],
@@ -26,6 +27,9 @@ export default {
         },
         GET_SELECTED_PROJECT_NAME(state) {
             return state.selectedProjectName
+        },
+        GET_SELECTED_PROJECT_DESCRIPTION(state) {
+            return state.selectedProjectDescription
         },
         GET_SELECTED_PROJECT_TASKS(state) {
             return state.selectedProjectTasks
@@ -56,6 +60,9 @@ export default {
         },
         SET_PROJECT_NAME(state, name) {
             state.selectedProjectName = name
+        },
+        SET_PROJECT_DESCRIPTION(state, desc) {
+            state.selectedProjectDescription = desc;
         },
         SET_PROJECT_TASKS(state, tasks) {
             state.selectedProjectTasks = tasks;
@@ -88,6 +95,7 @@ export default {
                         commit('SET_INITIAL_PROJECT', projects.data.data[0])
                         commit('SET_PROJECT_ID', projects.data.data[0].id)
                         commit('SET_PROJECT_NAME', projects.data.data[0].name)
+                        commit('SET_PROJECT_DESCRIPTION', projects.data.data[0].description)
                         dispatch('FETCH_PROJECT_TASKS', projects.data.data[0].id)
                     }
 
@@ -185,10 +193,15 @@ export default {
            commit("SET_PROJECT_NAME", projectName)
         },
 
+        storeCurrentProjectDescription({ commit }, projectDescription) {
+           commit('SET_PROJECT_DESCRIPTION', projectDescription)
+        },
+
         // Clear everything
         clearAllSelectedProjects({commit}) {
            commit("SET_PROJECT_ID", null)
            commit("SET_PROJECT_NAME", null)
+           commit("SET_PROJECT_DESCRIPTION", null)
            commit("SET_PROJECT_ID", null)
            commit("SET_PROJECT_TASKS", null)
         }

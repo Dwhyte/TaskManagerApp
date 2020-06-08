@@ -12,7 +12,7 @@
                 <li
                     v-else
                     v-for="project in projects"
-                    @click="getProjectTasks(project.id, project.name)"
+                    @click="getProjectTasks(project.id, project.name, project.description)"
                     :class="{'selected': selectedProjectID === project.id}">
                     {{ project.name }}
                 </li>
@@ -54,15 +54,17 @@
               fetchTasks: 'FETCH_PROJECT_TASKS',
               storeSelectedProjectID: "storeCurrentProjectID",
               storeSelectedProjectName: "storeCurrentProjectName",
+              storeSelectedProjectDesc: "storeCurrentProjectDescription",
               storeTasks: "storeCurrentTasks",
               showNewProjectForm: "showNewProjectForm"
          }),
 
           // Store selected tasks in vuex storage
-            getProjectTasks(projectID, projectName) {
+            getProjectTasks(projectID, projectName, projectDesc) {
              // console.log(projectID, projectName)
                 this.storeSelectedProjectID(projectID)
                 this.storeSelectedProjectName(projectName)
+                this.storeSelectedProjectDesc(projectDesc)
                 this.fetchTasks(projectID)
             },
         },
