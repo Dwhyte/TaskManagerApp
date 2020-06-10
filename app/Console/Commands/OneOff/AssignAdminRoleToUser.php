@@ -46,7 +46,6 @@ class AssignAdminRoleToUser extends Command
 
             // find user
             $user = User::where('email', $email)->first();
-            // $user = User::where('email', 'demoking@email.com')->first();
 
             if(!$user) {
                 $this->comment('User Does Not Exists');
