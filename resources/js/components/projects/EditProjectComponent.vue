@@ -62,7 +62,7 @@
 
           }),
             // Create a new project
-            updateProject: async function () {
+            async updateProject() {
                 try {
                     let res = await axios.post(`/vue/edit-project/${this.form.id}`, this.form);
                     if (res.data.success) {
@@ -93,6 +93,8 @@
                 }
             },
         },
+
+        // Watch if selected data has changed.
         watch: {
             selectedProjectID() {
                 this.form.id = this.selectedProjectID

@@ -57,6 +57,11 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    @role('Admin')
+                                        <a class="dropdown-item" href="/admin">
+                                            Admin Dashboard
+                                        </a>
+                                    @endrole
                                     <a class="dropdown-item" href="/home">
                                         TaskManager Dashboard
                                     </a>

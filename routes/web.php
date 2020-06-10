@@ -27,7 +27,6 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 
 Route::middleware(['auth'])->group(function () {
-
     /**************************************************************************
         API Points for Front End
      **************************************************************************/
@@ -47,4 +46,17 @@ Route::middleware(['auth'])->group(function () {
     });
 
 
+});
+
+
+Route::middleware(['auth', 'checkIfAdmin', 'role:Admin'])->group(function () {
+    /**************************************************************************
+        Admin Only
+     **************************************************************************/
+    Route::get('/admin', 'AdminController@index');
+
+    Route::group(['prefix' => 'vue'], function () {
+        Route::post('/admin/users', 'AdminController@getUsers');
+        Route::post('/admin/users/delete/{user}', 'AdminController@removeUser');
+    });
 });

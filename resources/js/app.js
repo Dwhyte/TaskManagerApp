@@ -34,6 +34,7 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 Vue.component('project-list-component', require('./components/ProjectListComponent').default);
 // Vue.component('tasks-component', require('./components/TasksComponent').default);
 Vue.component('task-manager-component', require('./components/TaskManagerComponent').default);
+Vue.component('admin-manager-component', require('./components/admin/AdminComponent').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -45,6 +46,7 @@ Vue.use(VueAxios, axios);
 Vue.use(VueDraggable);
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
+Vue.use(require('vue-moment'));
 Vue.use(VueFlashMessage, {
   messageOptions: {
     timeout: 5000,
