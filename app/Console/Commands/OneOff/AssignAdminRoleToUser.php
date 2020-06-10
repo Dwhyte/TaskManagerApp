@@ -39,17 +39,31 @@ class AssignAdminRoleToUser extends Command
      */
     public function handle()
     {
-        $main = $this->output->createProgressBar(100);
-        // find user
-        $user = User::where('email', 'demoking@email.com')->first();
+        $email = $this->ask('Please enter email address you wish to assign' );
 
-        $this->info(' Assigning User: '.$user->email.' to admin role .... .');
+        try {
+            $main = $this->output->createProgressBar(100);
 
-        // assign user to admin role.
-        $adminRoleToAssign = Role::findByName('Admin', 'web');
-        $user->assignRole($adminRoleToAssign);
+            // find user
+            $user = User::where('email', $email)->first();
+            // $user = User::where('email', 'demoking@email.com')->first();
 
-        $main->finish();
-        $this->info(' Assigning Complete. ');
+            if(!$user) {
+                $this->comment('User Does Not Exists');
+            }
+
+            $this->info(' Assigning User: '.$user->email.' to admin role .... .');
+
+            // assign user to admin role.
+            $adminRoleToAssign = Role::findByName('Admin', 'web');
+            $user->assignRole($adminRoleToAssign);
+
+            $main->finish();
+            $this->info(' Assigning Complete. ');
+
+        } catch(\Exception $e) {
+            return 'System Error.. Please Try again.';
+        }
+
     }
 }
