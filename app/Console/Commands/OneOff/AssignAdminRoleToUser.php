@@ -39,7 +39,7 @@ class AssignAdminRoleToUser extends Command
      */
     public function handle()
     {
-        $email = $this->ask('Please enter email address you wish to assign' );
+        $email = $this->ask('Please enter email address you wish to assign Admin Role' );
 
         try {
             $main = $this->output->createProgressBar(100);
