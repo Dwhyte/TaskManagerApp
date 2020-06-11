@@ -12,5 +12,6 @@ class RoleSeeder extends Seeder
     public function run()
     {
         $adminRole = \Spatie\Permission\Models\Role::firstOrCreate(['name' => 'Admin', 'guard_name' => 'web']);
+        $memberRole = \Spatie\Permission\Models\Role::firstOrCreate(['name' => 'Member', 'guard_name' => 'web']);
     }
 }

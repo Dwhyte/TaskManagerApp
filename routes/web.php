@@ -58,5 +58,6 @@ Route::middleware(['auth', 'checkIfAdmin', 'role:Admin'])->group(function () {
     Route::group(['prefix' => 'vue'], function () {
         Route::post('/admin/users', 'AdminController@getUsers');
         Route::post('/admin/users/delete/{user}', 'AdminController@removeUser');
+        Route::post('/admin/users/role-change/{user}', 'AdminController@changeUserRole');
     });
 });

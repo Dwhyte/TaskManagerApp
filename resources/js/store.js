@@ -1,5 +1,6 @@
 import Vue from "vue"
 import Vuex from "vuex"
+import admin from './adminStore'
 
 Vue.use(Vuex);
 
@@ -234,5 +235,8 @@ export default {
         }
 
 
+    },
+    modules: {
+        admin
     }
 }
