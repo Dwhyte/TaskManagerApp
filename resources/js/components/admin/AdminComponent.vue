@@ -1,6 +1,7 @@
 <template>
     <div class="container">
         <ChangeRoleModalComponent></ChangeRoleModalComponent>
+        <flash-message  outerClass="flashpool flash__wrapper" transitionName="flash-enter flash-leave-to flash-leave-active"></flash-message>
         <div class="row">
             <div class="col-md-12">
                 <table class="table table-bordered">
@@ -98,13 +99,13 @@
                         let res = await axios.post(`/vue/admin/users/delete/${id}`)
                         if (res.data.success) {
                             // refresh table with current user list.
-                            this.getAllUsers()
+                            this.fetchUsers()
 
                             // flash message
-                            // this.flash(`Removed User`, "success flash__message");
+                            this.flash(`Removed User`, "success flash__message");
                         }
                     } catch (errors) {
-                        this.errors = errors.response.data
+                        this.errors = errors.response
                     }
                 }
             },

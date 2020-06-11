@@ -73,14 +73,14 @@
                         this.hideModal()
 
                         // flash message
-                        // this.flash(`User is now a :<br> ${res.data.message}`, "success flash__message");
+                        this.flash(`User is now a :<br> ${res.data.message}`, "success flash__message");
 
                         // clear errors
                         this.errors = {}
                     }
                 } catch(error) {
-                    console.log(error.response.data)
-                    this.errors = error.response.data
+                    console.log(error.response)
+                    this.errors = error.response
                 }
             }
         }
