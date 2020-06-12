@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Project;
 use App\Models\Task;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -55,6 +56,8 @@ class TaskController extends Controller
             'task_name' => $request->task_name,
             'description' => $request->description,
             'priority_level' => $request->priority_level,
+            'due_date' => $request->due_date,
+//            'due_date' => Carbon::createFromFormat('YYYY-MM-DD h:i:s', $request->due_date),
             'is_completed' => $request->is_completed,
         ]);
 
@@ -85,6 +88,7 @@ class TaskController extends Controller
         $task->task_name = $request->task_name;
         $task->description = $request->description;
         $task->priority_level = $request->priority_level;
+        $task->due_date = $request->due_date;
         $task->is_completed = $request->is_completed;
         $task->update();
 
