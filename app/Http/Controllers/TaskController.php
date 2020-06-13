@@ -39,6 +39,11 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
+
+//        $date = Carbon::now('-5');
+//        dd($date->timezone->getName());
+//        exit();
+
         $validator = Validator::make($request->all(), [
             'task_name' => 'required',
             'description' => 'required'
@@ -57,7 +62,6 @@ class TaskController extends Controller
             'description' => $request->description,
             'priority_level' => $request->priority_level,
             'due_date' => $request->due_date,
-//            'due_date' => Carbon::createFromFormat('YYYY-MM-DD h:i:s', $request->due_date),
             'is_completed' => $request->is_completed,
         ]);
 

@@ -25,7 +25,9 @@
                         </div>
                     </div>
                     <div class="widget-subheading"><i>{{ task.description | truncate(85) }}</i></div>
-                    <div class="widget-subheading" v-if="task.due_date" style="color: #2d73ab;"><i>Due Date: {{ task.due_date | moment("MMMM Do YYYY, h:mm a") }}</i></div>
+                    <div class="widget-subheading" v-if="task.due_date" style="color: #2d73ab;">
+                        <i>Due Date: {{ task.due_date | moment("MMMM Do YYYY") }}</i>
+                    </div>
                 </div>
                 <div class="widget-content-right">
                     <button class="border-0 btn-transition btn btn-outline-success"

@@ -27,8 +27,8 @@
                   </div>
               </div>
               <div class="form-group">
-                  <label for="due_date">Due Date</label>
-                  <datetime class="dateTime" format="MM-DD-YYYY h:i:s" v-model="form.due_date"></datetime>
+                  <label for="example-datepicker">Choose a date</label>
+                <b-form-datepicker id="example-datepicker" v-model="form.due_date" class="mb-2"></b-form-datepicker>
               </div>
               <div class="form-group form-check">
                 <input type="checkbox" class="form-check-input" id="is_completed" v-model="form.is_completed">
@@ -50,13 +50,8 @@
 
 <script>
     import { mapActions, mapGetters } from "vuex";
-    import datetime from 'vuejs-datetimepicker';
-    import moment from 'moment'
     export default {
         name: "AddTaskModalComponent",
-        components: {
-            datetime
-        },
         data() {
             return {
                 priority_levels: [
@@ -73,8 +68,8 @@
                     priority_level: 'low',
                     due_date: '',
                     is_completed: false
-
                 },
+                currentDate: '',
                 errors: {}
             }
         },
@@ -95,14 +90,7 @@
         // Create a new task
            async addTask() {
                 try {
-                   let newTask = await axios.post('/vue/add-new-task', {
-                        project_id: this.form.project_id,
-                        task_name: this.form.task_name,
-                        description: this.form.description,
-                        priority_level: this.form.priority_level,
-                        due_date: moment(String(this.form.due_date)).format('YYYY-MM-DD hh:mm:ss'),
-                        is_completed: this.form.is_completed
-                   })
+                   let newTask = await axios.post('/vue/add-new-task', this.form)
                    if (newTask.data.success) {
 
                        // fetch updated task list

@@ -26,6 +26,10 @@
                     {{ errors.description[0] }}
                   </div>
               </div>
+              <div class="form-group">
+                  <label for="example-datepicker">Choose a date</label>
+                <b-form-datepicker id="example-datepicker" v-model="form.due_date" class="mb-2"></b-form-datepicker>
+              </div>
               <div class="form-group form-check">
                 <input type="checkbox" class="form-check-input" id="is_completed" v-model="form.is_completed">
                 <label class="form-check-label" for="is_completed">Completed?</label>
@@ -62,6 +66,7 @@
                     task_name: '',
                     description: '',
                     priority_level: '',
+                    due_date: '',
                     is_completed: ''
                 },
                 errors: {}
@@ -118,6 +123,7 @@
                 this.form.project_id = this.task.project_id
                 this.form.description = this.task.description
                 this.form.priority_level = this.task.priority_level
+                this.form.due_date = this.task.due_date ? this.form.due_date = this.task.due_date : ''
                 this.form.is_completed = this.task.is_completed
             }
         }

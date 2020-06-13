@@ -9,7 +9,7 @@ class Task extends Model
 {
     protected $table = 'tasks';
     protected $fillable = ['project_id', 'user_id', 'task_name', 'description', 'priority_level', 'due_date', 'is_completed'];
-    protected $dates = ['due_date'];
+//    protected $dates = ['due_date'];
 
     // Relationships
     public function Project()

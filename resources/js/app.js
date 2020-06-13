@@ -12,6 +12,7 @@ import VueAxios from 'vue-axios'
 import Vuex from 'vuex';
 import StoreData from './store';
 import VueDraggable from 'vue-draggable';
+import VueMoment from 'vue-moment'
 import VueTruncate from 'vue-truncate-filter';
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
@@ -48,7 +49,7 @@ Vue.use(VueDraggable);
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
 Vue.use(VueTruncate)
-Vue.use(require('vue-moment'));
+Vue.use(VueMoment);
 Vue.use(VueFlashMessage, {
   messageOptions: {
     timeout: 5000,
