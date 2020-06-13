@@ -19,7 +19,9 @@
                     @sortend="sortend($event, projects)"
                     @real-click="getProjectTasks(project.id, project.name, project.description)"
                     :class="{'selected': selectedProjectID === project.id}">
-                    {{ project.name }}
+                    <div class="mb-0">{{ project.name }}
+                        <i class="fa fa-arrows" aria-hidden="true"></i>
+                    </div>
                 </sortable>
 <!--                <li-->
 
@@ -88,7 +90,7 @@
             sortend (e, list) {
               const { oldIndex, newIndex } = e
               this.rearrange(list, oldIndex, newIndex)
-                console.log(oldIndex, newIndex)
+                // console.log(oldIndex, newIndex)
               this.saveSortedList()
             },
             rearrange (array, oldIndex, newIndex) {
@@ -103,17 +105,13 @@
             },
 
           async saveSortedList() {
-              // let projects = this.projects
-                       // console.log(projects)
                 try {
                     let res = await axios.post('/vue/sort-projects', {
                         projects: this.projects
                     });
-                    if(res.data.success) {
-                        console.log(res.data)
-                    }
                 } catch(error) {
-                    console.log(error.response.data)
+                    // flash message
+                    this.flash(`System Error:<br> <strong>Could not sort projects list</strong>`, "danger flash__message");
                 }
             }
         },
@@ -133,7 +131,17 @@
       box-shadow: 0 2px 10px 0 rgba(0,0,0,.2);
     }
 
+    .list .fa-arrows {
+        /*float: right;*/
+        /*margin-right: 40px;*/
+        /*margin-top: 7px;*/
+        display: none;
+        float: right;
+    }
+
     .drag-sortable {
+        /*cursor: move;*/
+        width: 255px;
         cursor: pointer;
         padding: 17px;
         background: #e6e9ec;
@@ -144,6 +152,23 @@
         background: #bfc5ce;
         color: #fff;
     }
+
+    .drag-sortable.dragging.anim {
+        cursor: move;
+    }
+
+    .drag-sortable.dragging.anim .fa-arrows {
+        display: none;
+    }
+
+    .drag-sortable.anim .fa-arrows {
+        display: none;
+    }
+
+    .drag-sortable:hover .fa-arrows {
+        display: block;
+    }
+
 
     .drag-sortable.selected {
         background: #7b838c;
