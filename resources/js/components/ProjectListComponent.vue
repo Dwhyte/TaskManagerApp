@@ -89,6 +89,7 @@
               const { oldIndex, newIndex } = e
               this.rearrange(list, oldIndex, newIndex)
                 console.log(oldIndex, newIndex)
+              this.saveSortedList()
             },
             rearrange (array, oldIndex, newIndex) {
               if (oldIndex > newIndex) {
@@ -99,6 +100,21 @@
                 array.splice(newIndex + 1, 0, array[oldIndex])
                 array.splice(oldIndex, 1)
               }
+            },
+
+          async saveSortedList() {
+              // let projects = this.projects
+                       // console.log(projects)
+                try {
+                    let res = await axios.post('/vue/sort-projects', {
+                        projects: this.projects
+                    });
+                    if(res.data.success) {
+                        console.log(res.data)
+                    }
+                } catch(error) {
+                    console.log(error.response.data)
+                }
             }
         },
     }

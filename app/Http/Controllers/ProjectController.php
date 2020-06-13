@@ -29,7 +29,8 @@ class ProjectController extends Controller
 //            ->get();
 
         $projects = Project::where('user_id', '=', $user->id)
-            ->select('id', 'user_id', 'name', 'description')
+            ->select('id', 'user_id', 'name', 'description', 'position')
+            ->orderBy('position', 'asc')
             ->latest()
             ->get();
 
@@ -78,6 +79,31 @@ class ProjectController extends Controller
         return response()->json(['success' => true, 'data' => $new_project], 200);
 
     }
+
+
+    /**
+     * Update all projects position by new index key
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function SortProjectList(Request $request)
+    {
+        $projectsData = $this->validate($request, [
+            'projects' => 'required|array'
+        ]);
+
+        foreach ($projectsData['projects'] as $key => $project) {
+            $updateProject = Project::where('id', $project['id'])->first();
+            $updateProject->position = $key + 1;
+            $updateProject->save();
+        }
+
+        return response()->json(['success' => true, 'message' => 'Projects list sorted!'], 200);
+
+    }
+
+
 
     public function editProject(Project $project, Request $request)
     {
