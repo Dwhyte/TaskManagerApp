@@ -27,8 +27,14 @@
                   </div>
               </div>
               <div class="form-group">
-                  <label for="example-datepicker">Choose a date</label>
-                <b-form-datepicker id="example-datepicker" v-model="form.due_date" class="mb-2"></b-form-datepicker>
+                  <label>Choose a due date</label>
+                <b-form-datepicker
+                    v-model="form.due_date"
+                    today-button
+                    reset-button
+                    close-button
+                    class="mb-2"
+                ></b-form-datepicker>
               </div>
               <div class="form-group form-check">
                 <input type="checkbox" class="form-check-input" id="is_completed" v-model="form.is_completed">
