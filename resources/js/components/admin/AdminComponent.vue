@@ -1,11 +1,11 @@
 <template>
-    <div class="container">
+    <div class="container-fluid">
         <ChangeRoleModalComponent></ChangeRoleModalComponent>
         <flash-message  outerClass="flashpool flash__wrapper" transitionName="flash-enter flash-leave-to flash-leave-active"></flash-message>
         <div class="row">
             <div class="col-md-12">
-                <table class="table table-bordered">
-                  <thead>
+                <table class="table table-hover table-bordered table-striped">
+                  <thead class="thead-dark">
                     <tr>
                       <th scope="col"># ID</th>
                       <th scope="col">Role</th>
