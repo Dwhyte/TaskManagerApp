@@ -20,7 +20,7 @@
                     @real-click="getProjectTasks(project.id, project.name, project.description)"
                     :class="{'selected': selectedProjectID === project.id}">
                     <div class="mb-0">{{ project.name }}
-                        <i class="fa fa-arrows" aria-hidden="true"></i>
+                        <i class="fa fa-arrows mr-3 mt-1" aria-hidden="true"></i>
                     </div>
                 </sortable>
 <!--                <li-->
@@ -135,8 +135,8 @@
         /*float: right;*/
         /*margin-right: 40px;*/
         /*margin-top: 7px;*/
-        display: none;
-        float: right;
+        /*display: none;*/
+        float: left;
     }
 
     .drag-sortable {
