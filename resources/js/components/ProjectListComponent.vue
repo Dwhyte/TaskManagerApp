@@ -5,17 +5,29 @@
         </div>
         <div class="scroll-area-sm">
             <AddNewProjectComponent v-if="showForm"></AddNewProjectComponent>
-            <ul v-else>
+            <ul class="list" v-else>
                 <div v-if="projects && projects.length === 0"  class="alert alert-info" role="alert">
                     <h5 class="alert-heading">Create a new project</h5>
                 </div>
-                <li
+                <sortable
                     v-else
-                    v-for="project in projects"
-                    @click="getProjectTasks(project.id, project.name, project.description)"
+                    v-for="(project, index) in projects"
+                    v-model="dragData"
+                    :key="project.id"
+                    :index="index"
+                    drag-direction="vertical"
+                    @sortend="sortend($event, projects)"
+                    @real-click="getProjectTasks(project.id, project.name, project.description)"
                     :class="{'selected': selectedProjectID === project.id}">
                     {{ project.name }}
-                </li>
+                </sortable>
+<!--                <li-->
+
+<!--                    v-for="project in projects"-->
+<!--                    @click="getProjectTasks(project.id, project.name, project.description)"-->
+<!--                    :class="{'selected': selectedProjectID === project.id}">-->
+<!--                    {{ project.name }}-->
+<!--                </li>-->
             </ul>
         </div>
         <div class="d-block text-right card-footer">
@@ -28,12 +40,19 @@
 
 <script>
     import { mapActions, mapGetters } from "vuex";
+    import Sortable from 'vue-drag-sortable'
     import AddNewProjectComponent from "./projects/AddNewProjectComponent";
     export default {
         props: ['projects'],
         name: "ProjectListComponent",
         components: {
+            Sortable,
             AddNewProjectComponent
+        },
+        data() {
+            return {
+                dragData: {},
+            }
         },
         computed: {
         ...mapGetters({
@@ -61,11 +80,60 @@
                 this.storeSelectedProjectDesc(projectDesc)
                 this.fetchTasks(projectID)
             },
+
+            sort (e) {
+              const { oldIndex, newIndex } = e
+              console.log(oldIndex, newIndex)
+            },
+            sortend (e, list) {
+              const { oldIndex, newIndex } = e
+              this.rearrange(list, oldIndex, newIndex)
+                console.log(oldIndex, newIndex)
+            },
+            rearrange (array, oldIndex, newIndex) {
+              if (oldIndex > newIndex) {
+                array.splice(newIndex, 0, array[oldIndex])
+                array.splice(oldIndex + 1, 1)
+              }
+              else {
+                array.splice(newIndex + 1, 0, array[oldIndex])
+                array.splice(oldIndex, 1)
+              }
+            }
         },
     }
 </script>
 
 <style scoped>
+    .list {
+      position: relative; /* position of list container must be set to `relative` */
+      width: 300px;
+      height: 400px;
+      overflow: auto;
+    }
+    /* dragging item will be added with a `dragging` class */
+    /* so you can use this class to define the appearance of it */
+    .list > *.dragging {
+      box-shadow: 0 2px 10px 0 rgba(0,0,0,.2);
+    }
+
+    .drag-sortable {
+        cursor: pointer;
+        padding: 17px;
+        background: #e6e9ec;
+        border-bottom: 1px solid #c6d4e2;
+    }
+
+    .drag-sortable:hover {
+        background: #bfc5ce;
+        color: #fff;
+    }
+
+    .drag-sortable.selected {
+        background: #7b838c;
+        border: 2px solid #435261;
+        color: #fff;
+    }
     ul {
         list-style: none;
         padding: 0;
