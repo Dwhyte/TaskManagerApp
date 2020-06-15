@@ -4,10 +4,10 @@
     <EditTaskModalComponent></EditTaskModalComponent>
     <AddTaskModalComponent></AddTaskModalComponent>
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-sm-12 col-lg-3">
             <project-list-component :projects="projects"></project-list-component>
         </div>
-        <div class="col-md-9">
+        <div class="col-sm-12 col-lg-9">
                 <div class="card-hover-shadow-2x mb-3 card">
                 <div class="card-header-tab card-header"
                      :style="showEditProject ? 'height: 8.5rem;' : 'height: 4.5rem;'">

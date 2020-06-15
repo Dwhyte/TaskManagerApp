@@ -187,3 +187,10 @@ i {
     .flash-leave-active {
         position: absolute
     }
+
+
+@media(max-width: 600px) {
+        .widget-subheading {
+            width: 200px;
+        }
+    }

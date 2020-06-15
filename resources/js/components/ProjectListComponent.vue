@@ -176,16 +176,12 @@
         color: #fff;
     }
 
-    @media(max-width: 500px) {
+    @media(max-width: 768px) {
         .list {
             width: 100%;
         }
         .drag-sortable {
             width: 100%;
-        }
-
-        .widget-subheading {
-            width: 200px;
         }
     }
 
