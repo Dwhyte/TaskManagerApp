@@ -175,6 +175,21 @@
         border: 2px solid #435261;
         color: #fff;
     }
+
+    @media(max-width: 500px) {
+        .list {
+            width: 100%;
+        }
+        .drag-sortable {
+            width: 100%;
+        }
+
+        .widget-subheading {
+            width: 200px;
+        }
+    }
+
+
     ul {
         list-style: none;
         padding: 0;
