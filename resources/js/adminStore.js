@@ -1,7 +1,7 @@
 import Vue from "vue"
 import Vuex from "vuex"
 
-const AUTH_USER = window.App.user;
+const AUTH_USER = window.User;
 
 export default {
     namespaced: true,

@@ -13,10 +13,14 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script type="text/javascript">
-        window.App = {
-            !!json_encode(['user' => Auth::user()]) !!
-        };
+        // window.App = {
+        //     json_encode(['user' => Auth::user()])
+        // }
+            window.User = <?=json_encode(Auth::user())?>
     </script>
+{{--    <script type="text/javascript">--}}
+{{--        window.User = "{{ json_encode(Auth::user())  }}"--}}
+{{--    </script>--}}
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
